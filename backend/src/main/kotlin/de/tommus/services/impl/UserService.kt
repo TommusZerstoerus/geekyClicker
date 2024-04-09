@@ -1,5 +1,6 @@
 package de.tommus.services.impl
 
+import de.tommus.model.SaveDTO
 import de.tommus.model.UserDTO
 import de.tommus.model.UserEntity
 import de.tommus.model.Users
@@ -37,6 +38,12 @@ class UserService : UserServiceInterface {
     override suspend fun editUser(user: UserDTO): Boolean = transaction {
         Users.update({ Users.id eq user.id }) {
             it[username] = user.username
+        } > 0
+    }
+
+    override suspend fun save(username: String, newBalance: Int): Boolean = transaction {
+        Users.update({ Users.username eq username }) {
+            it[balance] = newBalance
         } > 0
     }
 

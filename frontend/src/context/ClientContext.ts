@@ -13,7 +13,6 @@ export const ClientContext = createContext<{
 }>({
     client: initialClientState,
     setClient: (newClient) => {
-        console.log(newClient)
         // @ts-ignore
         this.client = newClient
     },

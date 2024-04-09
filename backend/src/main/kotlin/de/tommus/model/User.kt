@@ -8,7 +8,7 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 object Users : IntIdTable() {
     val username = varchar("username", 128).uniqueIndex()
     val password = varchar("password", 128)
-    val balance = integer("balance").default(1000)
+    val balance = integer("balance").default(10)
 }
 
 class UserEntity(id: EntityID<Int>) : IntEntity(id) {

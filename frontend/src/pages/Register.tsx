@@ -1,7 +1,5 @@
-
 import {Container, Grid, Paper, TextField, Button, Typography, CircularProgress} from '@mui/material';
-import {useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useClient} from "../context/ClientContext.ts";
 import {useMutation} from "@tanstack/react-query";
 import {ClientService} from "../service/ClientService.ts";
@@ -11,22 +9,22 @@ const Register = () => {
     const {client, setClient} = useClient();
     let errorText = ""
 
-    const {mutate, isError,  isPending, isSuccess} = useMutation(
+    const {mutate, isError, isPending} = useMutation(
         {
             mutationKey: ["registerUser"],
             mutationFn: async () => {
                 return await ClientService.registerUser(client);
             },
+            onSuccess: () => {
+                navigate('/')
+            }
         }
     );
 
-    useEffect(() => {
-            if (isSuccess) {
-                errorText = ""
-                navigate('/')
-            }
-        },
-        [isSuccess, navigate, setClient])
+    const handleRegister: React.FormEventHandler<HTMLFormElement> = (e) => {
+        e.preventDefault()
+        mutate()
+    }
 
     if (isPending) {
         return <>
@@ -34,20 +32,21 @@ const Register = () => {
         </>
     }
 
-    if(isError) {
+    if (isError) {
         errorText = "Benutzername oder Passwort fehlerhaft"
     }
 
 
     return (
         <Container maxWidth="xs">
-            <Paper elevation={3} style={{ padding: 20, marginTop: 50 }}>
+            <Paper elevation={3} style={{padding: 20, marginTop: 50}}>
                 <Typography variant="h4" gutterBottom>
                     Register
                 </Typography>
                 <Typography color="error">
                     {errorText}
                 </Typography>
+                <form onSubmit={handleRegister}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -57,7 +56,8 @@ const Register = () => {
                                 name="username"
                                 label="Benutzername"
                                 variant="outlined"
-                                onChange={(value) => setClient({...client, username: value.target.value})}
+                                value={client.username}
+                                onChange={(event) => setClient({...client, username: event.target.value})}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -69,7 +69,8 @@ const Register = () => {
                                 label="Passwort"
                                 type="password"
                                 variant="outlined"
-                                onChange={(value) => setClient({...client, password: value.target.value})}
+                                value={client.password}
+                                onChange={(event) => setClient({...client, password: event.target.value})}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -78,9 +79,6 @@ const Register = () => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                onClick={() => {
-                                    mutate()
-                                }}
                             >
                                 Registrieren
                             </Button>
@@ -96,6 +94,7 @@ const Register = () => {
                             </Button>
                         </Grid>
                     </Grid>
+                </form>
             </Paper>
         </Container>
     );

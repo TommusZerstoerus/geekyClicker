@@ -3,30 +3,30 @@ import {useClient} from "../context/ClientContext.ts";
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {ClientService} from "../service/ClientService.ts";
-import {useEffect} from "react";
 
 const Login = () => {
     const {client, setClient} = useClient();
     const navigate = useNavigate();
     let errorText = ""
 
-    const {mutate, data, isError,  isPending, isSuccess} = useMutation(
+    const {mutate, isError, isPending} = useMutation(
         {
             mutationKey: ["loginUser"],
             mutationFn: async () => {
                 return await ClientService.loginUser(client);
             },
-        }
-    );
-
-    useEffect(() => {
-            if (isSuccess) {
-                errorText = ""
+            onSuccess: (data) => {
                 setClient(data)
                 navigate('/home')
             }
-        },
-        [isSuccess, navigate, setClient])
+        }
+    );
+
+    const handleLogin: React.FormEventHandler<HTMLFormElement> = (e) => {
+        e.preventDefault()
+        mutate()
+    }
+
 
     if (isPending) {
         return <>
@@ -34,7 +34,7 @@ const Login = () => {
         </>
     }
 
-    if(isError) {
+    if (isError) {
         errorText = "Benutzername oder Passwort fehlerhaft"
     }
 
@@ -47,55 +47,55 @@ const Login = () => {
                 <Typography color="error">
                     {errorText}
                 </Typography>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            id="username"
-                            label="Benutzername"
-                            variant="outlined"
-                            onChange={(value) => setClient({...client, username: value.target.value})}
-                        />
+                <form onSubmit={handleLogin}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                id="username"
+                                name="username"
+                                label="Benutzername"
+                                variant="outlined"
+                                value={client.username}
+                                onChange={(event) => setClient({...client, username: event.target.value})}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                id="password"
+                                name="password"
+                                label="Passwort"
+                                type="password"
+                                variant="outlined"
+                                value={client.password}
+                                onChange={(event) => setClient({...client, password: event.target.value})}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                            >
+                                Einloggen
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={() => navigate('/register')}
+                            >
+                                Noch keinen Account? Registrieren
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            id="password"
-                            label="Passwort"
-                            type="password"
-                            variant="outlined"
-                            onChange={(value) => setClient({...client, password: value.target.value})}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            onClick={() => {
-                                mutate()
-                            }}
-                        >
-                            Einloggen
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            onClick={() => {
-                                navigate("/register")
-                            }}
-                        >
-                            Noch keinen Account?
-                        </Button>
-                    </Grid>
-                </Grid>
+                </form>
             </Paper>
         </Container>
     );

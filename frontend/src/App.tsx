@@ -13,6 +13,7 @@ function App() {
     const [client, setClient] = useState({
         username: '',
         password: '',
+        balance: 0
     });
 
     return (
