@@ -1,1 +1,1 @@
-# adventureEconomy
+# Geeky Clicker
