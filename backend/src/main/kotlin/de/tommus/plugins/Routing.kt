@@ -86,31 +86,29 @@ fun Application.configureRouting() {
     }
 
     routing {
-        authenticate("auth-basic") {
-            post("/user/save") {
-                val dto = call.receive<SaveDTO>()
-                val username = dto.username
-                val userResponse = userService.save(username, dto.balance)
-                val upgradeResponse = upgradeService.updateUpgrades(
-                    UpgradeDTO(
-                        username,
-                        dto.click1upgrade,
-                        dto.click2upgrade,
-                        dto.click3upgrade,
-                        dto.click4upgrade,
-                        dto.click5upgrade,
-                        dto.income1upgrade,
-                        dto.income2upgrade,
-                        dto.income3upgrade,
-                        dto.income4upgrade,
-                        dto.income5upgrade
-                    )
+        post("/user/save") {
+            val dto = call.receive<SaveDTO>()
+            val username = dto.username
+            val userResponse = userService.save(username, dto.balance)
+            val upgradeResponse = upgradeService.updateUpgrades(
+                UpgradeDTO(
+                    username,
+                    dto.click1upgrade,
+                    dto.click2upgrade,
+                    dto.click3upgrade,
+                    dto.click4upgrade,
+                    dto.click5upgrade,
+                    dto.income1upgrade,
+                    dto.income2upgrade,
+                    dto.income3upgrade,
+                    dto.income4upgrade,
+                    dto.income5upgrade
                 )
-                if (userResponse && upgradeResponse) {
-                    call.respond(HttpStatusCode.OK)
-                } else {
-                    call.respond(HttpStatusCode.NotFound)
-                }
+            )
+            if (userResponse && upgradeResponse) {
+                call.respond(HttpStatusCode.OK)
+            } else {
+                call.respond(HttpStatusCode.NotFound)
             }
         }
     }

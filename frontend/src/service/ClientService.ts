@@ -24,9 +24,10 @@ const loginUser = async (client: Client) => {
 
 const saveClient = async (client: Client, saveDTO: SaveDTO) => {
     const credentials = Buffer.from(`${client.username}:${client.password}`).toString('base64')
-    const res = await apiClient.post('/user/save', {saveDTO}, {
+    const res = await apiClient.post('/user/save', saveDTO, {
         headers: {
-            'Authorization': `Basic ${credentials}`
+            'Authorization': `Basic ${credentials}`,
+            'Content-Type': 'application/json'
         }
     })
     return res.data

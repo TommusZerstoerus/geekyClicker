@@ -5,7 +5,7 @@ import {useUpgrade} from "../../context/UpgradeContext.tsx";
 import {useEffect, useState} from "react";
 
 const IncomeUpgrade5 = () => {
-    const [upgradePrice, setUpgradePrice] = useState(10);
+    const [upgradePrice, setUpgradePrice] = useState(10000000);
     const {client, setClient} = useClient()
     const {upgrade, setUpgrade} = useUpgrade()
     const balance = client.balance

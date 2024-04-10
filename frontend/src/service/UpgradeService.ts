@@ -21,7 +21,6 @@ const updateUpgrade = async (upgrade: Upgrade, client: Client) => {
         }
     })
     return res.data
-
 }
 
 export const UpgradeService = {

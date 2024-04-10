@@ -8,10 +8,10 @@ import {useQuery} from "@tanstack/react-query";
 import {UpgradeService} from "../service/UpgradeService.ts";
 import {Upgrade} from "../model/Upgrade.ts";
 import Box from "@mui/material/Box";
-import AnimatedSVG from "../components/AnimatedSvg.tsx";
+import icon from "../assets/icon.svg";
 
 const Home = () => {
-    const {client} = useClient();
+    const {client, setClient} = useClient();
 
     const {data, isPending, isError, error, isSuccess} = useQuery(
         {
@@ -34,6 +34,10 @@ const Home = () => {
         </>
     }
 
+    const handleClick = () => {
+        setClient({...client, balance: client.balance + 1});
+    };
+
     return (
         <UpgradeProvider upgrade={data}>
             <Header/>
@@ -49,13 +53,23 @@ const Home = () => {
                             <div style={{marginBottom: '20px'}}>
                                 <Typography variant="h4">Balance: {client.balance}€</Typography>
                             </div>
+                            <div style={{marginBottom: '10px'}}>
+                                <Typography variant="h6" gutterBottom>
+                                    Klick Bonus: {0}€
+                                </Typography>
+                            </div>
                             <div style={{marginBottom: '20px'}}>
                                 <Typography variant="h6" gutterBottom>
-                                    Passives Einkommen: 0€
+                                    Passives Einkommen: {0}€
                                 </Typography>
                             </div>
                             <div>
-                                <AnimatedSVG/>
+                                <img
+                                    style={{cursor: 'pointer'}}
+                                    onClick={handleClick}
+                                    src={icon}
+                                    alt="Logo"
+                                ></img>
                             </div>
                         </Box>
                     </Container>

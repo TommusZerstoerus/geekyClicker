@@ -5,7 +5,7 @@ import {useUpgrade} from "../../context/UpgradeContext.tsx";
 import {useEffect, useState} from "react";
 
 const ClickUpgrade2 = () => {
-    const [upgradePrice, setUpgradePrice] = useState(10);
+    const [upgradePrice, setUpgradePrice] = useState(100);
     const {client, setClient} = useClient()
     const {upgrade, setUpgrade} = useUpgrade()
     const balance = client.balance

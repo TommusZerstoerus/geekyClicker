@@ -1,5 +1,8 @@
 package de.tommus.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class SaveDTO(
     val username: String,
     val click1upgrade: Int,

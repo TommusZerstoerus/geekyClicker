@@ -35,29 +35,29 @@ class DatabaseService() {
             if(UpgradeEntity.all().empty()) {
                 UpgradeEntity.new {
                     username = "TommusZerstoerus"
-                    click1upgrade = 0
-                    click2upgrade = 0
-                    click3upgrade = 0
-                    click4upgrade = 0
-                    click5upgrade = 0
-                    income1upgrade = 0
-                    income2upgrade = 0
-                    income3upgrade = 0
-                    income4upgrade = 0
-                    income5upgrade = 0
+                    click1upgrade = 1
+                    click2upgrade = 1
+                    click3upgrade = 1
+                    click4upgrade = 1
+                    click5upgrade = 1
+                    income1upgrade = 1
+                    income2upgrade = 1
+                    income3upgrade = 1
+                    income4upgrade = 1
+                    income5upgrade = 1
                 }
                 UpgradeEntity.new {
                     username = "ToniTester01"
-                    click1upgrade = 0
-                    click2upgrade = 0
-                    click3upgrade = 0
-                    click4upgrade = 0
-                    click5upgrade = 0
-                    income1upgrade = 0
-                    income2upgrade = 0
-                    income3upgrade = 0
-                    income4upgrade = 0
-                    income5upgrade = 0
+                    click1upgrade = 1
+                    click2upgrade = 1
+                    click3upgrade = 1
+                    click4upgrade = 1
+                    click5upgrade = 1
+                    income1upgrade = 1
+                    income2upgrade = 1
+                    income3upgrade = 1
+                    income4upgrade = 1
+                    income5upgrade = 1
                 }
                 UpgradeEntity.new {
                     username = "admin"
