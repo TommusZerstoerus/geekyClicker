@@ -26,9 +26,10 @@ const IncomeUpgrade4 = () => {
 
     return(
         <Container maxWidth="sm" style={{ textAlign: "center" }}>
-            <Box border={2} borderColor="primary.main" borderRadius={8} p={3}>
+            <Box border={2} borderColor="inherit" borderRadius={8} p={3}
+                 sx={{background: "linear-gradient(180deg, hsla(0, 0%, 100%, 1) 40%, hsla(32, 100%, 62%, 1) 100%)"}}>
                 <Typography variant="body1">
-                    Einkommen Upgrade 4
+                    Kaffeevollautomat kaufen
                 </Typography>
                 <Typography>
                     Stufe {upgrade.income4upgrade}

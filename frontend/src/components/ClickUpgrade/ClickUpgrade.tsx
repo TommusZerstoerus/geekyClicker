@@ -1,10 +1,16 @@
-import {Button, Container, Typography} from "@mui/material";
-import Box from "@mui/material/Box";
+import {useEffect, useState} from "react";
 import {useClient} from "../../context/ClientContext.ts";
 import {useUpgrade} from "../../context/UpgradeContext.tsx";
-import {useEffect, useState} from "react";
+import {Button, Container, Typography} from "@mui/material";
+import Box from "@mui/material/Box";
 
-const ClickUpgrade1 = () => {
+type ClickUpgradeProps = {
+    id: number,
+    name: String,
+    basePrice: number,
+}
+
+const ClickUpgrade = ({id, name, basePrice} : ClickUpgradeProps) => {
     const [upgradePrice, setUpgradePrice] = useState(10);
     const {client, setClient} = useClient()
     const {upgrade, setUpgrade} = useUpgrade()
@@ -36,7 +42,7 @@ const ClickUpgrade1 = () => {
                 }}
             >
                 <Typography variant="body1">
-                    Kotlin lernen
+                    {name}
                 </Typography>
                 <Typography>
                     Stufe {upgrade.click1upgrade}
@@ -47,4 +53,4 @@ const ClickUpgrade1 = () => {
     )
 }
 
-export default ClickUpgrade1;
+export default ClickUpgrade;

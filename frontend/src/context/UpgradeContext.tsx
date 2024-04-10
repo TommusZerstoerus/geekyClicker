@@ -26,10 +26,22 @@ export const UpgradeContext = createContext<{
     },
 });
 
-type UpgradeProviderProps = React.PropsWithChildren<{upgrade: Upgrade}>
+type UpgradeProviderProps = React.PropsWithChildren<{}>
 
-export const UpgradeProvider: React.FC<UpgradeProviderProps> = ({children, upgrade: initialUpgrade}) => {
-    const [upgrade, setUpgrade] = useState(initialUpgrade);
+export const UpgradeProvider: React.FC<UpgradeProviderProps> = ({children}) => {
+    const [upgrade, setUpgrade] = useState({
+        username: "",
+        click1upgrade: 0,
+        click2upgrade: 0,
+        click3upgrade: 0,
+        click4upgrade: 0,
+        click5upgrade: 0,
+        income1upgrade: 0,
+        income2upgrade: 0,
+        income3upgrade: 0,
+        income4upgrade: 0,
+        income5upgrade: 0
+    });
 
     return <UpgradeContext.Provider value={{upgrade, setUpgrade}}>
         {children}

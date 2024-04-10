@@ -26,9 +26,10 @@ const IncomeUpgrade5 = () => {
 
     return(
         <Container maxWidth="sm" style={{ textAlign: "center" }}>
-            <Box border={2} borderColor="primary.main" borderRadius={8} p={3}>
+            <Box border={2} borderColor="inherit" borderRadius={8} p={3}
+                 sx={{background: "linear-gradient(180deg, hsla(0, 0%, 100%, 1) 40%, hsla(0, 0%, 51%, 1) 100%)"}}>
                 <Typography variant="body1">
-                    Einkommen Upgrade 5
+                    Python Verbieten
                 </Typography>
                 <Typography>
                     Stufe {upgrade.income5upgrade}

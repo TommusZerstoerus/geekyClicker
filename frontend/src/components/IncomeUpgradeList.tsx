@@ -11,7 +11,7 @@ const IncomeUpgradeList = () => {
         <Container maxWidth="xs" style={{ maxHeight: '1000px', overflowY: 'auto', textAlign: 'center' }}>
             <Box p={2}>
                 <div style={{marginBottom: '20px'}}>
-                    <Typography>Passives Einkommen Upgraden</Typography>
+                    <Typography variant="h4">Einkommen Upgraden</Typography>
                 </div>
                 <div style={{marginBottom: '20px'}}>
                     <IncomeUpgrade1/>

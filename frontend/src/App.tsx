@@ -7,6 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Register from "./pages/Register.tsx";
+import {UpgradeProvider} from "./context/UpgradeContext.tsx";
 
 function App() {
 
@@ -15,17 +16,20 @@ function App() {
         password: '',
         balance: 0
     });
+
     return (
         <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false}/>
             <ClientContext.Provider value={{client, setClient}}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route index element={<Login/>}></Route>
-                        <Route path="home" element={<Home/>}></Route>
-                        <Route path="register" element={<Register/>}></Route>
-                    </Routes>
-                </BrowserRouter>
+                <UpgradeProvider>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route index element={<Login/>}></Route>
+                            <Route path="home" element={<Home/>}></Route>
+                            <Route path="register" element={<Register/>}></Route>
+                        </Routes>
+                    </BrowserRouter>
+                </UpgradeProvider>
             </ClientContext.Provider>
         </QueryClientProvider>
     )

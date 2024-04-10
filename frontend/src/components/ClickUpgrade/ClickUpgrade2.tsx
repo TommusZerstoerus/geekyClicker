@@ -24,16 +24,18 @@ const ClickUpgrade2 = () => {
         calcUpgradePrice()
     }, [upgrade.click2upgrade]);
 
-    return(
-        <Container maxWidth="sm" style={{ textAlign: "center" }}>
-            <Box border={2} borderColor="primary.main" borderRadius={8} p={3}>
+    return (
+        <Container maxWidth="sm" style={{textAlign: "center"}}>
+            <Box border={2} borderColor="inherit" borderRadius={8} p={3}
+                 sx={{background: "linear-gradient(180deg, hsla(0, 0%, 100%, 1) 40%, hsla(128, 83%, 72%, 1) 100%)"}}>
                 <Typography variant="body1">
-                    Upgrade 2
+                    Cache leeren
                 </Typography>
                 <Typography>
                     Stufe {upgrade.click2upgrade}
                 </Typography>
-                {balance >= upgradePrice ? <Button variant="contained" onClick={buyUpgrade}>{upgradePrice}€</Button> : <Button variant="contained" disabled>{upgradePrice}€</Button>}
+                {balance >= upgradePrice ? <Button variant="contained" onClick={buyUpgrade}>{upgradePrice}€</Button> :
+                    <Button variant="contained" disabled>{upgradePrice}€</Button>}
             </Box>
         </Container>
     )

@@ -24,16 +24,18 @@ const ClickUpgrade3 = () => {
         calcUpgradePrice()
     }, [upgrade.click3upgrade]);
 
-    return(
-        <Container maxWidth="sm" style={{ textAlign: "center" }}>
-            <Box border={2} borderColor="primary.main" borderRadius={8} p={3}>
+    return (
+        <Container maxWidth="sm" style={{textAlign: "center"}}>
+            <Box border={2} borderColor="inherit" borderRadius={8} p={3}
+                 sx={{background: "linear-gradient(180deg, hsla(0, 0%, 100%, 1) 40%, hsla(0, 59%, 54%, 1) 100%)"}}>
                 <Typography variant="body1">
-                    Upgrade 3
+                    Merge Konflikte lösen
                 </Typography>
                 <Typography>
                     Stufe {upgrade.click3upgrade}
                 </Typography>
-                {balance >= upgradePrice ? <Button variant="contained" onClick={buyUpgrade}>{upgradePrice}€</Button> : <Button variant="contained" disabled>{upgradePrice}€</Button>}
+                {balance >= upgradePrice ? <Button variant="contained" onClick={buyUpgrade}>{upgradePrice}€</Button> :
+                    <Button variant="contained" disabled>{upgradePrice}€</Button>}
             </Box>
         </Container>
     )

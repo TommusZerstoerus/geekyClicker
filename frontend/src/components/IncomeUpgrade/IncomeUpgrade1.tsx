@@ -11,7 +11,7 @@ const IncomeUpgrade1 = () => {
     const balance = client.balance
 
     function calcUpgradePrice() {
-        setUpgradePrice(UpgradePrice => UpgradePrice * upgrade.income1upgrade);
+        setUpgradePrice(UpgradePrice => 100 * (upgrade.income1upgrade * upgrade.income1upgrade));
     }
 
     function buyUpgrade() {
@@ -24,16 +24,25 @@ const IncomeUpgrade1 = () => {
         calcUpgradePrice()
     }, [upgrade.income1upgrade]);
 
-    return(
-        <Container maxWidth="sm" style={{ textAlign: "center" }}>
-            <Box border={2} borderColor="primary.main" borderRadius={8} p={3}>
+    return (
+        <Container maxWidth="sm" style={{textAlign: "center"}}>
+            <Box
+                border={2}
+                borderColor="inherit"
+                borderRadius={8}
+                p={3}
+                sx={{
+                    background: 'linear-gradient(180deg, hsla(0, 0%, 100%, 1) 40%, hsla(220, 61%, 79%, 1) 100%)'
+                }}
+            >
                 <Typography variant="body1">
-                    Einkommen Upgrade 1
+                    Einen weiteren Monitor aufstellen
                 </Typography>
                 <Typography>
                     Stufe {upgrade.income1upgrade}
                 </Typography>
-                {balance >= upgradePrice ? <Button variant="contained" onClick={buyUpgrade}>{upgradePrice}€</Button> : <Button variant="contained" disabled>{upgradePrice}€</Button>}
+                {balance >= upgradePrice ? <Button variant="contained" onClick={buyUpgrade}>{upgradePrice}€</Button> :
+                    <Button variant="contained" disabled>{upgradePrice}€</Button>}
             </Box>
         </Container>
     )

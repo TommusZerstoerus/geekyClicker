@@ -6,6 +6,12 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
 object Upgrades : IntIdTable() {
+
+
+
+
+
+
     val username = varchar("username", 128).uniqueIndex()
 
     val click1upgrade = integer("click1upgrade").default(0)
