@@ -1,32 +1,28 @@
 import Box from "@mui/material/Box";
 import {Container, Typography} from "@mui/material";
-import IncomeUpgrade1 from "./IncomeUpgrade/IncomeUpgrade1.tsx";
-import IncomeUpgrade2 from "./IncomeUpgrade/IncomeUpgrade2.tsx";
-import IncomeUpgrade3 from "./IncomeUpgrade/IncomeUpgrade3.tsx";
-import IncomeUpgrade4 from "./IncomeUpgrade/IncomeUpgrade4.tsx";
-import IncomeUpgrade5 from "./IncomeUpgrade/IncomeUpgrade5.tsx";
+import UpgradeBox from "./UpgradeBox.tsx";
 
 const IncomeUpgradeList = () => {
-    return(
-        <Container maxWidth="xs" style={{ maxHeight: '1000px', overflowY: 'auto', textAlign: 'center' }}>
+    return (
+        <Container maxWidth="xs" style={{maxHeight: '1000px', overflowY: 'auto', textAlign: 'center'}}>
             <Box p={2}>
                 <div style={{marginBottom: '20px'}}>
                     <Typography variant="h4">Einkommen Upgraden</Typography>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <IncomeUpgrade1/>
+                    <UpgradeBox id={5} basePrice={1000} name={"Einen weiteren Monitor aufstellen"}/>
                 </div>
-                <div style={{ marginBottom: '20px' }}>
-                    <IncomeUpgrade2 />
+                <div style={{marginBottom: '20px'}}>
+                    <UpgradeBox id={6} basePrice={10000} name={"Musik hören"}/>
                 </div>
-                <div style={{ marginBottom: '20px' }}>
-                    <IncomeUpgrade3 />
+                <div style={{marginBottom: '20px'}}>
+                    <UpgradeBox id={7} basePrice={50000} name={"Git Pipeline schreiben"}/>
                 </div>
-                <div style={{ marginBottom: '20px' }}>
-                    <IncomeUpgrade4 />
+                <div style={{marginBottom: '20px'}}>
+                    <UpgradeBox id={8} basePrice={100000} name={"Kaffeevollautomat kaufen"}/>
                 </div>
-                <div style={{ marginBottom: '20px' }}>
-                    <IncomeUpgrade5 />
+                <div style={{marginBottom: '20px'}}>
+                    <UpgradeBox id={9} basePrice={1000000} name={"Python verbieten"}/>
                 </div>
             </Box>
         </Container>

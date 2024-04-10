@@ -42,12 +42,11 @@ fun Application.configureRouting() {
         authenticate("auth-basic") {
             get("/upgrade/getUpgrade") {
                 val username = call.principal<UserIdPrincipal>()?.name!!
-                val response = upgradeService.getUpgrades(username)
-                if (response != null) {
-                    call.respond(response)
-                } else {
-                    call.respond(HttpStatusCode.NotFound)
-                }
+                val user = userService.findUserByName(username) ?: return@get call.respond(HttpStatusCode.NotFound)
+
+                val response = upgradeService.getUpgrades(user.id!!)
+
+                call.respond(response)
             }
         }
     }
@@ -77,7 +76,7 @@ fun Application.configureRouting() {
             val user = call.receive<UserDTO>()
             val response = userService.addNewUser(user)
             if (response != null) {
-                upgradeService.createUpgrades(user.username)
+                //upgradeService.createUpgrades(user.username)
                 call.respond(response)
             } else {
                 call.respond(HttpStatusCode.BadRequest)
@@ -86,30 +85,41 @@ fun Application.configureRouting() {
     }
 
     routing {
-        post("/user/save") {
-            val dto = call.receive<SaveDTO>()
-            val username = dto.username
-            val userResponse = userService.save(username, dto.balance)
-            val upgradeResponse = upgradeService.updateUpgrades(
-                UpgradeDTO(
-                    username,
-                    dto.click1upgrade,
-                    dto.click2upgrade,
-                    dto.click3upgrade,
-                    dto.click4upgrade,
-                    dto.click5upgrade,
-                    dto.income1upgrade,
-                    dto.income2upgrade,
-                    dto.income3upgrade,
-                    dto.income4upgrade,
-                    dto.income5upgrade
-                )
-            )
-            if (userResponse && upgradeResponse) {
+        authenticate("auth-basic") {
+            post("/user/save") {
+                val dto = call.receive<SaveDTO>()
+                val username = dto.username
+                val userResponse = userService.save(username, dto.balance)
+
+                if (!userResponse) {
+                    call.respond(HttpStatusCode.NotFound)
+                    return@post
+                }
+
+                val user = userService.findUserByName(username) ?: return@post call.respond(HttpStatusCode.NotFound)
+
+                val userID = user.id ?: return@post call.respond(HttpStatusCode.NotFound)
+                val oldUpgrades = upgradeService.getUpgrades(userID)
+
+                dto.upgrades.forEach { newUpgrade ->
+
+                    val oldUpgrade = oldUpgrades.find {
+                        it.upgradeID == newUpgrade.upgradeID
+                    }
+                    // upgrade exists -> update old entry
+                    if (oldUpgrade != null) {
+                        upgradeService.updateUpgrades(
+                            UpgradeDTO(
+                                oldUpgrade.id, userID, newUpgrade.upgradeID, newUpgrade.level
+                            )
+                        )
+                    } else {
+                        upgradeService.createUpgrades(userID, newUpgrade.upgradeID, newUpgrade.level)
+                    }
+                }
                 call.respond(HttpStatusCode.OK)
-            } else {
-                call.respond(HttpStatusCode.NotFound)
             }
         }
     }
 }
+

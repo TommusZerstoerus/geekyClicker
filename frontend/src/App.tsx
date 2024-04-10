@@ -7,30 +7,38 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Register from "./pages/Register.tsx";
-import {UpgradeProvider} from "./context/UpgradeContext.tsx";
+import {GameContext} from "./context/GameContext.ts";
+import {theme} from "./themes/theme.ts";
+import {ThemeProvider} from "@mui/material";
 
 function App() {
 
     const [client, setClient] = useState({
         username: '',
-        password: '',
-        balance: 0
+        password: ''
+    });
+
+    const [game, setGame] = useState({
+        balance: 0,
+        upgrades: {}
     });
 
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false}/>
-            <ClientContext.Provider value={{client, setClient}}>
-                <UpgradeProvider>
-                    <BrowserRouter>
-                        <Routes>
-                            <Route index element={<Login/>}></Route>
-                            <Route path="home" element={<Home/>}></Route>
-                            <Route path="register" element={<Register/>}></Route>
-                        </Routes>
-                    </BrowserRouter>
-                </UpgradeProvider>
-            </ClientContext.Provider>
+            <ThemeProvider theme={theme}>
+                <ReactQueryDevtools initialIsOpen={false}/>
+                <ClientContext.Provider value={{client, setClient}}>
+                    <GameContext.Provider value={{game, setGame}}>
+                        <BrowserRouter>
+                            <Routes>
+                                <Route index element={<Login/>}></Route>
+                                <Route path="home" element={<Home/>}></Route>
+                                <Route path="register" element={<Register/>}></Route>
+                            </Routes>
+                        </BrowserRouter>
+                    </GameContext.Provider>
+                </ClientContext.Provider>
+            </ThemeProvider>
         </QueryClientProvider>
     )
 }

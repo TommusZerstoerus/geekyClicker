@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import {useClient} from "../context/ClientContext.ts";
 import {useMutation} from "@tanstack/react-query";
 import {ClientService} from "../service/ClientService.ts";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -16,10 +18,31 @@ const Register = () => {
                 return await ClientService.registerUser(client);
             },
             onSuccess: () => {
+                showSuccess()
                 navigate('/')
+            },
+            onError: (error) => {
+                showError(error.message)
             }
         }
     );
+
+    const showSuccess = () => {
+        withReactContent(Swal).fire({
+            title: <i>Erfolgreich registriert</i>,
+            icon: 'success',
+            showConfirmButton: true,
+        })
+    }
+
+    const showError = (message: string) => {
+        withReactContent(Swal).fire({
+            title: <i>Ein Fehler ist aufgetreten</i>,
+            text: message,
+            icon: 'error',
+            showConfirmButton: true,
+        })
+    }
 
     const handleRegister: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
