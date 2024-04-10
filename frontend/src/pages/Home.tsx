@@ -23,10 +23,6 @@ const Home = () => {
         if (!client || client.username == "" || client.password === "") {
             return navigate("/");
         }
-        const interval = setInterval(() => updateBalance(), 1000);
-        return () => {
-            clearInterval(interval);
-        };
     }, []);
 
     const {data, isPending, isError, error, isSuccess} = useQuery(
@@ -68,17 +64,21 @@ const Home = () => {
     }, [isSuccess, data]);
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            const currentGame = game
+            setGame({...currentGame, balance: currentGame.balance + incomeBonus});
+        }, 1000)
+
+        return () => clearInterval(interval);
+
+    }, [game, incomeBonus, setGame]);
+
+    useEffect(() => {
         const clickBonus = game.upgrades[0] + game.upgrades[1] * 2 + game.upgrades[2] * 3 + game.upgrades[3] * 4 + game.upgrades[4] * 5;
         setClickBonus(clickBonus);
         const incomeBonus = (game.upgrades[5] / 7) + (game.upgrades[6] / 5) + (game.upgrades[7] / 3) + (game.upgrades[8] / 2) + (game.upgrades[9]);
         setIncomeBonus(Math.floor(incomeBonus))
     }, [game.upgrades]);
-
-    const updateBalance = () => {
-        const newBalance = game.balance + incomeBonus;
-        console.log("New balance:", newBalance, "Bonus:", incomeBonus)
-        // setGame({...game, balance: game.balance + incomeBonus});
-    }
 
     if (isPending) {
         return <Box sx={{justifyContent: "center", alignContent: "center"}}>

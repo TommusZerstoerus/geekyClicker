@@ -3,13 +3,14 @@ import {useClient} from "../context/ClientContext.ts";
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {ClientService} from "../service/ClientService.ts";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const {client, setClient} = useClient();
     const navigate = useNavigate();
-    let errorText = ""
 
-    const {mutate, isError, isPending} = useMutation(
+    const {mutate, isPending} = useMutation(
         {
             mutationKey: ["loginUser"],
             mutationFn: async () => {
@@ -18,9 +19,21 @@ const Login = () => {
             onSuccess: (data) => {
                 setClient(data)
                 navigate('/home')
+            },
+            onError: (error) => {
+                showError(error.message)
             }
         }
     );
+
+    const showError = (message: string) => {
+        withReactContent(Swal).fire({
+            title: <i>Ein Fehler ist aufgetreten</i>,
+            text: message,
+            icon: 'error',
+            showConfirmButton: true,
+        })
+    }
 
     const handleLogin: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
@@ -34,18 +47,11 @@ const Login = () => {
         </>
     }
 
-    if (isError) {
-        errorText = "Benutzername oder Passwort fehlerhaft"
-    }
-
     return (
         <Container maxWidth="xs">
             <Paper elevation={3} style={{padding: 20, marginTop: 50}}>
                 <Typography variant="h4" gutterBottom>
                     Login
-                </Typography>
-                <Typography color="error">
-                    {errorText}
                 </Typography>
                 <form onSubmit={handleLogin}>
                     <Grid container spacing={2}>

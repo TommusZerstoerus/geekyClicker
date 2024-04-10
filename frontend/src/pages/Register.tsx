@@ -9,9 +9,8 @@ import Swal from "sweetalert2";
 const Register = () => {
     const navigate = useNavigate();
     const {client, setClient} = useClient();
-    let errorText = ""
 
-    const {mutate, isError, isPending} = useMutation(
+    const {mutate, isPending} = useMutation(
         {
             mutationKey: ["registerUser"],
             mutationFn: async () => {
@@ -55,19 +54,11 @@ const Register = () => {
         </>
     }
 
-    if (isError) {
-        errorText = "Benutzername oder Passwort fehlerhaft"
-    }
-
-
     return (
         <Container maxWidth="xs">
             <Paper elevation={3} style={{padding: 20, marginTop: 50}}>
                 <Typography variant="h4" gutterBottom>
                     Register
-                </Typography>
-                <Typography color="error">
-                    {errorText}
                 </Typography>
                 <form onSubmit={handleRegister}>
                     <Grid container spacing={2}>
