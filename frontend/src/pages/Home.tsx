@@ -76,7 +76,7 @@ const Home = () => {
     useEffect(() => {
         const clickBonus = game.upgrades[0] + game.upgrades[1] * 2 + game.upgrades[2] * 3 + game.upgrades[3] * 4 + game.upgrades[4] * 5;
         setClickBonus(clickBonus);
-        const incomeBonus = (game.upgrades[5] / 7) + (game.upgrades[6] / 5) + (game.upgrades[7] / 3) + (game.upgrades[8] / 2) + (game.upgrades[9]);
+        const incomeBonus = (game.upgrades[5] / 5) + (game.upgrades[6] / 2) + (game.upgrades[7] * 3) + (game.upgrades[8] * 10) + (game.upgrades[9] * 20);
         setIncomeBonus(Math.floor(incomeBonus))
     }, [game.upgrades]);
 
