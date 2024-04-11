@@ -15,7 +15,8 @@ function App() {
 
     const [client, setClient] = useState({
         username: '',
-        password: ''
+        password: '',
+        balance: 0
     });
 
     const [game, setGame] = useState({

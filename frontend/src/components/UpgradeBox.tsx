@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
-import {Button, Container, Typography} from "@mui/material";
+import {Button, Container, FormControlLabel, Stack, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {useGame} from "../context/GameContext.ts";
 import {ShoppingCart} from "@mui/icons-material";
+import {IOSSwitch} from "./IOSSwitch.tsx";
+import {formatNumber} from "./BalanceComponent.tsx";
 
 type ClickUpgradeProps = {
     id: number,
@@ -12,35 +14,60 @@ type ClickUpgradeProps = {
 
 const UpgradeBox = ({basePrice, id, name}: ClickUpgradeProps) => {
     const [upgradePrice, setUpgradePrice] = useState(basePrice);
+    const [tenTimes, setTenTimes] = useState(false);
     const {game, setGame} = useGame()
     const balance = game.balance
     const level = game.upgrades[id]
 
     function calcUpgradePrice() {
-        if (level === 0) {
-            setUpgradePrice(basePrice)
+        if (tenTimes) {
+            setUpgradePrice(calc10Price());
         } else {
-            setUpgradePrice(upgradePrice => upgradePrice * level);
+            if (level === 0) {
+                setUpgradePrice(basePrice)
+            } else {
+                setUpgradePrice(basePrice * level);
+            }
         }
     }
 
+    function calc10Price() {
+        return Array.from({length: 10}, (_, i) =>
+            (level + i) * basePrice
+        ).reduce((sum, current) => sum + current, 0)
+    }
+
     function buyUpgrade() {
-        setGame({...game, balance: balance - upgradePrice, upgrades: {...game.upgrades, [id]: level + 1}})
+        tenTimes ? setGame({
+            ...game,
+            balance: balance - upgradePrice,
+            upgrades: {...game.upgrades, [id]: level + 10}
+        }) : setGame({
+            ...game,
+            balance: balance - upgradePrice,
+            upgrades: {...game.upgrades, [id]: level + 1}
+        })
     }
 
     useEffect(() => {
         setUpgradePrice(basePrice)
         calcUpgradePrice()
-    }, [level]);
+    }, [level, tenTimes]);
+
+    const upgradePriceText = formatNumber(upgradePrice);
 
     return (
         <Container maxWidth="sm" style={{textAlign: "center"}}>
             <Box
                 borderRadius={8}
                 boxShadow={3}
-                p={3}
+                p={2}
                 sx={{
-                    background: 'linear-gradient(0deg, hsla(24, 73%, 53%, 1) 10%, hsla(0, 0%, 100%, 1) 100%)'
+                    background: 'linear-gradient(0deg, hsla(24, 73%, 53%, 1) 10%, hsla(0, 0%, 100%, 1) 100%)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                 }}
             >
                 <Typography variant="body1">
@@ -51,9 +78,19 @@ const UpgradeBox = ({basePrice, id, name}: ClickUpgradeProps) => {
                 </Typography>
                 {balance >= upgradePrice ?
                     <Button startIcon={<ShoppingCart/>} variant="contained" color="secondary"
-                            onClick={buyUpgrade}>{upgradePrice}€</Button> :
+                            onClick={buyUpgrade}>{upgradePriceText}€</Button> :
                     <Button startIcon={<ShoppingCart/>} variant="contained" color="secondary"
-                            disabled>{upgradePrice}€</Button>}
+                            disabled>{upgradePriceText}€</Button>}
+                <Stack marginTop={'10px'} direction="row" spacing={1} alignItems="center">
+                    <Typography>1x</Typography>
+                    <FormControlLabel
+                        onChange={() => {
+                            setTenTimes(!tenTimes)
+                        }}
+                        control={<IOSSwitch sx={{m: 1}} defaultChecked={false}/>}
+                        label={""}/>
+                    <Typography>10x</Typography>
+                </Stack>
             </Box>
         </Container>
     )

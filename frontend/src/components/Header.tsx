@@ -21,7 +21,8 @@ const Header = () => {
     function handleLogout() {
         setClient({
             username: '',
-            password: ''
+            password: '',
+            balance: 0
         });
         setGame({
             balance: 0,
@@ -85,10 +86,7 @@ const Header = () => {
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Willkommen {client.username}
                     </Typography>
-                    <Typography variant="h6" component="div" sx={{marginRight: '20px'}}>
-                        Balance: {game.balance}€
-                    </Typography>
-                    <Button style={{marginRight: '20px'}} color="inherit" onClick={mutate}>Speichern</Button>
+                    <Button style={{marginRight: '20px'}} color="inherit" onClick={() => mutate()}>Speichern</Button>
                     <Button color="inherit" onClick={handleLogout}>Logout</Button>
                 </Toolbar>
             </AppBar>

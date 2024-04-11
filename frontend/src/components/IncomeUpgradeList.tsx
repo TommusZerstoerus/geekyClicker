@@ -4,7 +4,7 @@ import UpgradeBox from "./UpgradeBox.tsx";
 
 const IncomeUpgradeList = () => {
     return (
-        <Container maxWidth="xs" style={{maxHeight: '1000px', overflowY: 'auto', textAlign: 'center'}}>
+        <Container maxWidth="xs" style={{ overflowY: 'auto', textAlign: 'center'}}>
             <Box p={2}>
                 <div style={{marginBottom: '20px'}}>
                     <Typography variant="h4">Einkommen Upgraden</Typography>

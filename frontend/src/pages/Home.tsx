@@ -11,6 +11,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useGame} from "../context/GameContext.ts";
 import {Upgrade} from "../model/Upgrade.ts";
+import BalanceComponent from "../components/BalanceComponent.tsx";
 
 const Home = () => {
     const {client} = useClient();
@@ -74,9 +75,9 @@ const Home = () => {
     }, [game, incomeBonus, setGame]);
 
     useEffect(() => {
-        const clickBonus = game.upgrades[0] + game.upgrades[1] * 2 + game.upgrades[2] * 3 + game.upgrades[3] * 4 + game.upgrades[4] * 5;
+        const clickBonus = game.upgrades[0] + game.upgrades[1] * 5 + game.upgrades[2] * 10 + game.upgrades[3] * 20 + game.upgrades[4] * 50;
         setClickBonus(clickBonus);
-        const incomeBonus = (game.upgrades[5] / 5) + (game.upgrades[6] / 2) + (game.upgrades[7] * 3) + (game.upgrades[8] * 10) + (game.upgrades[9] * 20);
+        const incomeBonus = (game.upgrades[5] * 5) + (game.upgrades[6] * 20) + (game.upgrades[7] * 50) + (game.upgrades[8] * 100) + (game.upgrades[9] * 200);
         setIncomeBonus(Math.floor(incomeBonus))
     }, [game.upgrades]);
 
@@ -105,7 +106,7 @@ const Home = () => {
                     <Container maxWidth="xs" style={{maxHeight: '1000px', overflowY: 'auto', textAlign: 'center'}}>
                         <Box p={2}>
                             <div style={{marginBottom: '20px'}}>
-                                <Typography variant="h4">Balance {game.balance}€</Typography>
+                                <BalanceComponent heading={true} balance={game.balance} />
                             </div>
                             <div style={{marginBottom: '10px'}}>
                                 <Typography variant="h6" gutterBottom>
@@ -121,6 +122,7 @@ const Home = () => {
                                 <img
                                     style={{cursor: 'pointer'}}
                                     onClick={handleClick}
+                                    draggable={false}
                                     src={icon}
                                     alt="Logo"
                                 ></img>
