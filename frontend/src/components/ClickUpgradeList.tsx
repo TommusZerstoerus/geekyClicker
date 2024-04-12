@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import {Container, Typography} from "@mui/material";
-import UpgradeBox from "./UpgradeBox.tsx";
+import UpgradeBox, {UpgradeType} from "./UpgradeBox.tsx";
 
 const ClickUpgradeList = () => {
     return (
@@ -10,19 +10,19 @@ const ClickUpgradeList = () => {
                     <Typography variant="h4">Klick Bonus Upgraden</Typography>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={0} basePrice={10} name={"Kotlin lernen"}/>
+                    <UpgradeBox id={0} basePrice={10} name={"Kotlin lernen"} type={UpgradeType.CLICK}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={1} basePrice={100} name={"Cache leeren"}/>
+                    <UpgradeBox id={1} basePrice={100} name={"Cache leeren"} type={UpgradeType.CLICK}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={2} basePrice={500} name={"Merge Konflikte lösen"}/>
+                    <UpgradeBox id={2} basePrice={500} name={"Merge Konflikte lösen"} type={UpgradeType.CLICK}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={3} basePrice={1000} name={"Boris nach Hilfe fragen"}/>
+                    <UpgradeBox id={3} basePrice={1000} name={"Boris nach Hilfe fragen"} type={UpgradeType.CLICK}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={4} basePrice={2000} name={"Force Push auf Main"}/>
+                    <UpgradeBox id={4} basePrice={2000} name={"Force Push auf Main"} type={UpgradeType.CLICK}/>
                 </div>
             </Box>
         </Container>

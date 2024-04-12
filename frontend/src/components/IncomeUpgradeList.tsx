@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import {Container, Typography} from "@mui/material";
-import UpgradeBox from "./UpgradeBox.tsx";
+import UpgradeBox, {UpgradeType} from "./UpgradeBox.tsx";
 
 const IncomeUpgradeList = () => {
     return (
@@ -10,19 +10,19 @@ const IncomeUpgradeList = () => {
                     <Typography variant="h4">Einkommen Upgraden</Typography>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={5} basePrice={1000} name={"Einen weiteren Monitor aufstellen"}/>
+                    <UpgradeBox id={5} basePrice={1000} name={"Einen weiteren Monitor aufstellen"} type={UpgradeType.INCOME}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={6} basePrice={10000} name={"Musik hören"}/>
+                    <UpgradeBox id={6} basePrice={10000} name={"Musik hören"} type={UpgradeType.INCOME}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={7} basePrice={50000} name={"Git Pipeline schreiben"}/>
+                    <UpgradeBox id={7} basePrice={50000} name={"Git Pipeline schreiben"} type={UpgradeType.INCOME}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={8} basePrice={100000} name={"Kaffeevollautomat kaufen"}/>
+                    <UpgradeBox id={8} basePrice={100000} name={"Kaffeevollautomat kaufen"} type={UpgradeType.INCOME}/>
                 </div>
                 <div style={{marginBottom: '20px'}}>
-                    <UpgradeBox id={9} basePrice={1000000} name={"Python verbieten"}/>
+                    <UpgradeBox id={9} basePrice={1000000} name={"Python verbieten"} type={UpgradeType.INCOME}/>
                 </div>
             </Box>
         </Container>

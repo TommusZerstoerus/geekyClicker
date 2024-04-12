@@ -5,14 +5,21 @@ import {useGame} from "../context/GameContext.ts";
 import {ShoppingCart} from "@mui/icons-material";
 import {IOSSwitch} from "./IOSSwitch.tsx";
 import {formatNumber} from "./BalanceComponent.tsx";
+import {UpgradeBonusList} from "../model/UpgradeList.ts";
 
 type ClickUpgradeProps = {
     id: number,
     name: string,
     basePrice: number,
+    type: UpgradeType
 }
 
-const UpgradeBox = ({basePrice, id, name}: ClickUpgradeProps) => {
+export enum UpgradeType {
+    CLICK = "CLICK",
+    INCOME = "INCOME"
+}
+
+const UpgradeBox = ({basePrice, id, name, type}: ClickUpgradeProps) => {
     const [upgradePrice, setUpgradePrice] = useState(basePrice);
     const [tenTimes, setTenTimes] = useState(false);
     const {game, setGame} = useGame()
@@ -71,7 +78,7 @@ const UpgradeBox = ({basePrice, id, name}: ClickUpgradeProps) => {
                 }}
             >
                 <Typography variant="body1">
-                    {name}
+                    {name} {type === UpgradeType.CLICK ? `(+${UpgradeBonusList[id]}€)` : `(+${UpgradeBonusList[id]}€/s)`}
                 </Typography>
                 <Typography>
                     Stufe {level}

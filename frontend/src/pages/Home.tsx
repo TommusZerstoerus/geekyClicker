@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 import {useGame} from "../context/GameContext.ts";
 import {Upgrade} from "../model/Upgrade.ts";
 import BalanceComponent, {formatNumber} from "../components/BalanceComponent.tsx";
+import {UpgradeBonusList} from "../model/UpgradeList.ts";
 
 const Home = () => {
     const {client} = useClient();
@@ -73,6 +74,7 @@ const Home = () => {
         const interval = setInterval(() => {
             const currentGame = game
             setGame({...currentGame, balance: currentGame.balance + incomeBonus});
+            setWobble(true)
         }, 1000)
 
         return () => clearInterval(interval);
@@ -80,9 +82,19 @@ const Home = () => {
     }, [game, incomeBonus, setGame]);
 
     useEffect(() => {
-        const clickBonus = game.upgrades[0] + game.upgrades[1] * 5 + game.upgrades[2] * 10 + game.upgrades[3] * 20 + game.upgrades[4] * 50;
+        const clickBonus =
+            game.upgrades[0] * UpgradeBonusList[0] +
+            game.upgrades[1] * UpgradeBonusList[1] +
+            game.upgrades[2] * UpgradeBonusList[2] +
+            game.upgrades[3] * UpgradeBonusList[3] +
+            game.upgrades[4] * UpgradeBonusList[4];
         setClickBonus(clickBonus);
-        const incomeBonus = (game.upgrades[5] * 10) + (game.upgrades[6] * 50) + (game.upgrades[7] * 200) + (game.upgrades[8] * 500) + (game.upgrades[9] * 1000);
+        const incomeBonus =
+            (game.upgrades[5] * UpgradeBonusList[5]) +
+            (game.upgrades[6] * UpgradeBonusList[6]) +
+            (game.upgrades[7] * UpgradeBonusList[7]) +
+            (game.upgrades[8] * UpgradeBonusList[8]) +
+            (game.upgrades[9] * UpgradeBonusList[9]);
         setIncomeBonus(Math.floor(incomeBonus))
     }, [game.upgrades]);
 
