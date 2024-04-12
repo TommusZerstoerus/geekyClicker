@@ -13,12 +13,16 @@ import {useGame} from "../context/GameContext.ts";
 import {Upgrade} from "../model/Upgrade.ts";
 import BalanceComponent, {formatNumber} from "../components/BalanceComponent.tsx";
 import {UpgradeBonusList, UpgradeMileStoneList} from "../model/UpgradeList.ts";
+import { useSpring, animated } from '@react-spring/web'
 
 const Home = () => {
     const {client} = useClient();
     const [clickBonus, setClickBonus] = useState(0);
     const [incomeBonus, setIncomeBonus] = useState(0);
     const [wobble, setWobble] = useState(false)
+    const [springs, api] = useSpring(() => ({
+        from: { x: 0 },
+    }))
     const {game, setGame} = useGame()
     const navigate = useNavigate()
 

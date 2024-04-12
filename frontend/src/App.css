@@ -12,3 +12,21 @@
         transform: scale(1);
     }
 }
+
+.animate-bar {
+    animation: barZoom 1s ease-in-out alternate;
+}
+@keyframes barZoom {
+    0% {
+        background-color: gold;
+        transform: scale(1);
+    }
+    50% {
+        background-color: yellow;
+        transform: scale(1.1);
+    }
+    100% {
+        background-color: gold;
+        transform: scale(1);
+    }
+}

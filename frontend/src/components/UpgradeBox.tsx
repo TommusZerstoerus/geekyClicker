@@ -27,6 +27,7 @@ const UpgradeBox = ({id, name, type}: ClickUpgradeProps) => {
     const level = game.upgrades[id]
     const [oldValue, setOldValue] = useState(Math.floor(level / 100))
     const upgradePriceText = formatNumber(upgradePrice);
+    const [animateBar, setAnimateBar] = useState(false)
 
     function calcUpgradePrice() {
         if (tenTimes) {
@@ -61,9 +62,14 @@ const UpgradeBox = ({id, name, type}: ClickUpgradeProps) => {
     useEffect(() => {
         setUpgradePrice(basePrice)
         calcUpgradePrice()
+        setOldValue(Math.floor(level / 100))
     }, [level, tenTimes]);
 
-    console.log("oldValue", oldValue)
+    const newValue = Math.floor(level / 100)
+    if (newValue > oldValue) {
+        setAnimateBar(true)
+        setOldValue(newValue)
+    }
 
     return (
         <Container maxWidth="lg" style={{textAlign: "center"}}>
@@ -110,6 +116,8 @@ const UpgradeBox = ({id, name, type}: ClickUpgradeProps) => {
                 >
                     <LinearProgress
                         color={"secondary"}
+                        className={animateBar ? "animate-bar" : ""}
+                        onAnimationEnd={() => setAnimateBar(false)}
                         variant="determinate"
                         value={level % 100}
                     />
