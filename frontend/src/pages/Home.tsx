@@ -12,7 +12,7 @@ import {useNavigate} from "react-router-dom";
 import {useGame} from "../context/GameContext.ts";
 import {Upgrade} from "../model/Upgrade.ts";
 import BalanceComponent, {formatNumber} from "../components/BalanceComponent.tsx";
-import {UpgradeBonusList} from "../model/UpgradeList.ts";
+import {UpgradeBonusList, UpgradeMileStoneList} from "../model/UpgradeList.ts";
 
 const Home = () => {
     const {client} = useClient();
@@ -45,6 +45,11 @@ const Home = () => {
         }
         setGame({...game, balance: game.balance + clickBonus});
     };
+
+    function calcBonus(id: number) {
+        const mileStones = Math.floor(game.upgrades[id] / 100)
+        return Math.floor(game.upgrades[id] * UpgradeBonusList[id] + UpgradeMileStoneList[id] * mileStones)
+    }
 
     useEffect(() => {
         if (isSuccess && data) {
@@ -83,18 +88,18 @@ const Home = () => {
 
     useEffect(() => {
         const clickBonus =
-            game.upgrades[0] * UpgradeBonusList[0] +
-            game.upgrades[1] * UpgradeBonusList[1] +
-            game.upgrades[2] * UpgradeBonusList[2] +
-            game.upgrades[3] * UpgradeBonusList[3] +
-            game.upgrades[4] * UpgradeBonusList[4];
+            calcBonus(0) +
+            calcBonus(1) +
+            calcBonus(2) +
+            calcBonus(3) +
+            calcBonus(4)
         setClickBonus(clickBonus);
         const incomeBonus =
-            (game.upgrades[5] * UpgradeBonusList[5]) +
-            (game.upgrades[6] * UpgradeBonusList[6]) +
-            (game.upgrades[7] * UpgradeBonusList[7]) +
-            (game.upgrades[8] * UpgradeBonusList[8]) +
-            (game.upgrades[9] * UpgradeBonusList[9]);
+            calcBonus(5) +
+            calcBonus(6) +
+            calcBonus(7) +
+            calcBonus(8) +
+            calcBonus(9)
         setIncomeBonus(Math.floor(incomeBonus))
     }, [game.upgrades]);
 
@@ -134,7 +139,7 @@ const Home = () => {
                     <Container maxWidth="xs" style={{maxHeight: '1000px', overflowY: 'auto', textAlign: 'center'}}>
                         <Box p={2}>
                             <div style={{marginBottom: '20px'}}>
-                                <BalanceComponent heading={true} balance={game.balance}/>
+                                <BalanceComponent balance={game.balance}/>
                             </div>
                             <div style={{marginBottom: '10px'}}>
                                 <Typography variant="h6" gutterBottom>

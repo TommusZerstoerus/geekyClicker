@@ -7,7 +7,7 @@ const ClickUpgradeList = () => {
         <Container maxWidth="xs" style={{ overflowY: 'auto', textAlign: 'center' }}>
             <Box p={2}>
                 <div style={{marginBottom: '20px'}}>
-                    <Typography variant="h4">Klick Bonus Upgraden</Typography>
+                    <Typography variant="h4">Klick Bonus</Typography>
                 </div>
                 <div style={{marginBottom: '20px'}}>
                     <UpgradeBox id={0} basePrice={10} name={"Kotlin lernen"} type={UpgradeType.CLICK}/>

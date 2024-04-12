@@ -28,18 +28,18 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <ThemeProvider theme={theme}>
-                <ReactQueryDevtools initialIsOpen={false}/>
-                <ClientContext.Provider value={{client, setClient}}>
-                    <GameContext.Provider value={{game, setGame}}>
-                        <BrowserRouter>
-                            <Routes>
-                                <Route index element={<Login/>}></Route>
-                                <Route path="home" element={<Home/>}></Route>
-                                <Route path="register" element={<Register/>}></Route>
-                            </Routes>
-                        </BrowserRouter>
-                    </GameContext.Provider>
-                </ClientContext.Provider>
+                    <ReactQueryDevtools initialIsOpen={false}/>
+                    <ClientContext.Provider value={{client, setClient}}>
+                        <GameContext.Provider value={{game, setGame}}>
+                            <BrowserRouter>
+                                <Routes>
+                                    <Route index element={<Login/>}></Route>
+                                    <Route path="home" element={<Home/>}></Route>
+                                    <Route path="register" element={<Register/>}></Route>
+                                </Routes>
+                            </BrowserRouter>
+                        </GameContext.Provider>
+                    </ClientContext.Provider>
             </ThemeProvider>
         </QueryClientProvider>
     )

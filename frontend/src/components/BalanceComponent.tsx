@@ -6,16 +6,14 @@ export function formatNumber(balance: number) {
 }
 
 type BalanceComponentProps = {
-    balance: number,
-    heading: boolean
+    balance: number
 }
 
-function BalanceComponent({ balance, heading }: BalanceComponentProps) {
+function BalanceComponent({ balance }: BalanceComponentProps) {
     const formattedBalance = formatNumber(balance);
-    const variant = heading ? "h4" : "h6";
 
     return (
-        <Typography variant={variant}>
+        <Typography variant="h4">
             Balance {formattedBalance}€
         </Typography>
     );
