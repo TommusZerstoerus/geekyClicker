@@ -11,14 +11,16 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useGame} from "../context/GameContext.ts";
 import {Upgrade} from "../model/Upgrade.ts";
-import BalanceComponent from "../components/BalanceComponent.tsx";
+import BalanceComponent, {formatNumber} from "../components/BalanceComponent.tsx";
 
 const Home = () => {
     const {client} = useClient();
     const [clickBonus, setClickBonus] = useState(0);
     const [incomeBonus, setIncomeBonus] = useState(0);
+    const [wobble, setWobble] = useState(false)
     const {game, setGame} = useGame()
     const navigate = useNavigate()
+
 
     useEffect(() => {
         if (!client || client.username == "" || client.password === "") {
@@ -37,6 +39,9 @@ const Home = () => {
     );
 
     const handleClick = () => {
+        if (!wobble) {
+            setWobble(true);
+        }
         setGame({...game, balance: game.balance + clickBonus});
     };
 
@@ -77,45 +82,56 @@ const Home = () => {
     useEffect(() => {
         const clickBonus = game.upgrades[0] + game.upgrades[1] * 5 + game.upgrades[2] * 10 + game.upgrades[3] * 20 + game.upgrades[4] * 50;
         setClickBonus(clickBonus);
-        const incomeBonus = (game.upgrades[5] * 5) + (game.upgrades[6] * 20) + (game.upgrades[7] * 50) + (game.upgrades[8] * 100) + (game.upgrades[9] * 200);
+        const incomeBonus = (game.upgrades[5] * 10) + (game.upgrades[6] * 50) + (game.upgrades[7] * 200) + (game.upgrades[8] * 500) + (game.upgrades[9] * 1000);
         setIncomeBonus(Math.floor(incomeBonus))
     }, [game.upgrades]);
 
     if (isPending) {
-        return <Box sx={{justifyContent: "center", alignContent: "center"}}>
+        return <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
             <CircularProgress color="inherit"/>
         </Box>
     }
 
     if (isError || !isSuccess) {
-        return <>
+        return <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
             <Typography>Error: {error?.message}</Typography>
-        </>
+        </Box>
     }
 
     return (
         <>
             <Header/>
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-                <Container maxWidth="xs"
-                           style={{textAlign: "center", flex: "1", display: "flex", justifyContent: "center"}}>
-                    <ClickUpgradeList/>
-                </Container>
-                <Container maxWidth="xs"
-                           style={{textAlign: "center", flex: "1", display: "flex", justifyContent: "center"}}>
+            <div style={{display: "flex", justifyContent: "center", flexWrap: "wrap"}}>
+                <Container maxWidth="xs" sx={{order: {lg: 2, xs: 1}}} style={{
+                    textAlign: "center",
+                    flex: "1",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: '20px'
+                }}>
                     <Container maxWidth="xs" style={{maxHeight: '1000px', overflowY: 'auto', textAlign: 'center'}}>
                         <Box p={2}>
                             <div style={{marginBottom: '20px'}}>
-                                <BalanceComponent heading={true} balance={game.balance} />
+                                <BalanceComponent heading={true} balance={game.balance}/>
                             </div>
                             <div style={{marginBottom: '10px'}}>
                                 <Typography variant="h6" gutterBottom>
-                                    Klick Bonus {clickBonus}€
+                                    Klick Bonus {formatNumber(clickBonus)}€
                                 </Typography>
                             </div>
                             <div style={{marginBottom: '20px'}}>
                                 <Typography variant="h6" gutterBottom>
-                                    Passives Einkommen {incomeBonus}€
+                                    Passives Einkommen {formatNumber(incomeBonus)}€
                                 </Typography>
                             </div>
                             <div>
@@ -123,6 +139,8 @@ const Home = () => {
                                     style={{cursor: 'pointer'}}
                                     onClick={handleClick}
                                     draggable={false}
+                                    onAnimationEnd={() => setWobble(false)}
+                                    className={wobble ? 'wobble' : ''}
                                     src={icon}
                                     alt="Logo"
                                 ></img>
@@ -130,8 +148,24 @@ const Home = () => {
                         </Box>
                     </Container>
                 </Container>
-                <Container maxWidth="xs"
-                           style={{textAlign: "center", flex: "1", display: "flex", justifyContent: "center"}}>
+                <Container maxWidth="xs" sx={{
+                    textAlign: "center",
+                    flex: "1",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: '20px',
+                    order: {lg: 1, xs: 2}
+                }}>
+                    <ClickUpgradeList/>
+                </Container>
+                <Container maxWidth="xs" style={{
+                    textAlign: "center",
+                    flex: "1",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: '20px',
+                    order: 3
+                }}>
                     <IncomeUpgradeList/>
                 </Container>
             </div>
