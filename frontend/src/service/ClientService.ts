@@ -4,7 +4,6 @@ import {Buffer} from "buffer";
 import {SaveDTO} from "../model/SaveDTO.ts";
 
 const registerUser = async (client: Client) => {
-    console.log("Register",client)
     const res = await apiClient.post('/user/register', {
         username: client.username,
         password: client.password
@@ -24,6 +23,7 @@ const loginUser = async (client: Client) => {
 }
 
 const saveClient = async (client: Client, saveDTO: SaveDTO) => {
+    console.log("Unlocked", saveDTO.unlockedStocks)
     const credentials = Buffer.from(`${client.username}:${client.password}`).toString('base64')
     const res = await apiClient.post('/user/save', saveDTO, {
         headers: {

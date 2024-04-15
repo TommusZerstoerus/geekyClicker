@@ -26,18 +26,17 @@ const Home = () => {
     const {game, setGame} = useGame()
     const navigate = useNavigate()
 
-    const { transform } = useSpring({
-        from: { transform: 'scale(1)' },
+    const {transform} = useSpring({
+        from: {transform: 'scale(1)'},
         to: async next => {
             if (wobble) {
-                await next({ transform: 'scale(1.1)' });
-                await next({ transform: 'scale(1)' });
+                await next({transform: 'scale(1.1)'});
+                await next({transform: 'scale(1)'});
                 setWobble(false);
             }
         },
-        config: { duration: 100, easing: t => t },
+        config: {duration: 100, easing: t => t},
     });
-
 
 
     useEffect(() => {
@@ -61,7 +60,7 @@ const Home = () => {
     };
 
     const unlockStocks = () => {
-        setGame({...game, boughtStocks: true, balance: game.balance - 100000})
+        setGame({...game, unlockedStocks: true, balance: game.balance - 100000})
     }
 
     function calcBonus(id: number) {
@@ -89,13 +88,13 @@ const Home = () => {
             setGame({
                 balance: client.balance,
                 upgrades: savedUpgrades,
-                boughtStocks: client.boughtStocks
+                unlockedStocks: client.unlockedStocks,
             })
         }
     }, [isSuccess, data]);
 
     useEffect(() => {
-        if(incomeBonus > 0) {
+        if (incomeBonus > 0) {
             const interval = setInterval(() => {
                 const currentGame = game
                 setGame({...currentGame, balance: currentGame.balance + incomeBonus});
@@ -148,7 +147,7 @@ const Home = () => {
     return (
         <>
             <Header/>
-            <div style={{display: "flex", justifyContent: "center", flexWrap: "wrap"}}>
+            <Box sx={{display: "flex", justifyContent: "center", flexWrap: "wrap"}}>
                 <Container sx={{
                     maxWidth: "100%",
                     textAlign: "center",
@@ -158,24 +157,24 @@ const Home = () => {
                     marginBottom: '20px',
                     order: {lg: 2, xs: 1}
                 }}>
-                    <Container sx={{maxWidth: "100%" ,maxHeight: '1000px', overflowY: 'auto', textAlign: 'center', width: "100%"}}>
+                    <Container sx={{maxWidth: "100%", textAlign: 'center', width: "100%"}}>
                         <Box p={2}>
-                            <div style={{marginBottom: '20px'}}>
+                            <Box sx={{marginBottom: '20px'}}>
                                 <BalanceComponent balance={game.balance}/>
-                            </div>
-                            <div style={{marginBottom: '10px'}}>
+                            </Box>
+                            <Box sx={{marginBottom: '10px'}}>
                                 <Typography variant="h6" gutterBottom>
                                     Klick Bonus {formatNumber(clickBonus)}€
                                 </Typography>
-                            </div>
-                            <div style={{marginBottom: '20px'}}>
+                            </Box>
+                            <Box sx={{marginBottom: '20px'}}>
                                 <Typography variant="h6" gutterBottom>
                                     Passives Einkommen {formatNumber(incomeBonus)}€
                                 </Typography>
-                            </div>
-                            <div draggable={false}>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'center'}}>
                                 <animated.img
-                                    style={{cursor: 'pointer', transform, maxWidth: "50%", userSelect: 'none'}}
+                                    style={{ cursor: 'pointer', transform, userSelect: 'none', width: '50%' }}
                                     onClick={() => {
                                         handleClick()
                                         setWobble(true)
@@ -184,10 +183,13 @@ const Home = () => {
                                     onAnimationEnd={() => setWobble(false)}
                                     src={icon}
                                     alt="Logo"
-                                ></animated.img>
-                            </div>
-                            {game.boughtStocks && <StocksTable />}
-                            {!game.boughtStocks && <Button sx={{mt: 5}} disabled={game.balance <= 100000} startIcon={<ShoppingCart/>} variant="contained" color="secondary" onClick={unlockStocks}>Schalte Aktien frei ({formatNumber(100000)}€)</Button>}
+                                />
+                            </Box>
+                            {game.unlockedStocks && <StocksTable/>}
+                            {!game.unlockedStocks &&
+                                <Button sx={{mt: 5}} disabled={game.balance <= 100000} startIcon={<ShoppingCart/>}
+                                        variant="contained" color="secondary" onClick={unlockStocks}>Schalte Aktien frei
+                                    ({formatNumber(100000)}€)</Button>}
                         </Box>
                     </Container>
                 </Container>
@@ -201,7 +203,7 @@ const Home = () => {
                 }}>
                     <ClickUpgradeList/>
                 </Container>
-                <Container maxWidth="xs" style={{
+                <Container maxWidth="xs" sx={{
                     textAlign: "center",
                     flex: "1",
                     display: "flex",
@@ -211,7 +213,7 @@ const Home = () => {
                 }}>
                     <IncomeUpgradeList/>
                 </Container>
-            </div>
+            </Box>
         </>
     );
 };

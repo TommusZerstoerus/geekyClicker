@@ -9,7 +9,7 @@ object Users : IntIdTable() {
     val username = varchar("username", 128).uniqueIndex()
     val password = varchar("password", 128)
     val balance = integer("balance").default(10)
-    val boughtStocks = bool("boughtStocks").default(false)
+    val unlockedStocks = bool("unlockedStocks").default(false)
 }
 
 class UserEntity(id: EntityID<Int>) : IntEntity(id) {
@@ -18,7 +18,7 @@ class UserEntity(id: EntityID<Int>) : IntEntity(id) {
     var username by Users.username
     var password by Users.password
     var balance by Users.balance
-    var boughtStocks by Users.boughtStocks
+    var unlockedStocks by Users.unlockedStocks
 
     fun toDto(): UserDTO {
         return UserDTO(
@@ -26,7 +26,7 @@ class UserEntity(id: EntityID<Int>) : IntEntity(id) {
             username = username,
             password = password,
             balance = balance,
-            boughtStocks = boughtStocks
+            unlockedStocks = unlockedStocks
         )
     }
 }

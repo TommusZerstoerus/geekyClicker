@@ -2,7 +2,7 @@ export type SaveDTO = {
     username: string,
     upgrades: SavedUpgrade[],
     balance: number,
-    boughtStocks: boolean
+    unlockedStocks: boolean
 }
 
 type SavedUpgrade = {

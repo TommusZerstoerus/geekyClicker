@@ -2,7 +2,6 @@ package de.tommus.plugins
 
 import de.tommus.model.SaveDTO
 import de.tommus.model.UpgradeDTO
-import de.tommus.model.UserDTO
 import de.tommus.model.UserRegisterDTO
 import de.tommus.services.`interface`.UpgradeServiceInterface
 import de.tommus.services.`interface`.UserServiceInterface
@@ -89,7 +88,7 @@ fun Application.configureRouting() {
             post("/user/save") {
                 val dto = call.receive<SaveDTO>()
                 val username = dto.username
-                val userResponse = userService.save(username, dto.balance, dto.boughtStocks)
+                val userResponse = userService.save(username, dto.balance, dto.unlockedStocks)
 
                 if (!userResponse) {
                     call.respond(HttpStatusCode.NotFound)

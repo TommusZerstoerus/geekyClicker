@@ -23,12 +23,12 @@ const Header = () => {
             username: '',
             password: '',
             balance: 0,
-            boughtStocks: false,
+            unlockedStocks: false,
         });
         setGame({
             balance: 0,
             upgrades: {},
-            boughtStocks: false,
+            unlockedStocks: false,
         });
         queryClient.invalidateQueries().then(() => navigate('/'));
     }
@@ -77,7 +77,7 @@ const Header = () => {
                     level: game.upgrades[id]
                 }
             }),
-            boughtStocks: game.boughtStocks
+            unlockedStocks: game.unlockedStocks
         };
         return ClientService.saveClient(client, dto)
     }

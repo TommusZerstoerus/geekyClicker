@@ -2,5 +2,5 @@ export type Client = {
     username: string,
     password: string,
     balance: number,
-    boughtStocks: boolean,
+    unlockedStocks: boolean,
 }
