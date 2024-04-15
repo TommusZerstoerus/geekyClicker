@@ -23,7 +23,6 @@ const loginUser = async (client: Client) => {
 }
 
 const saveClient = async (client: Client, saveDTO: SaveDTO) => {
-    console.log("Unlocked", saveDTO.unlockedStocks)
     const credentials = Buffer.from(`${client.username}:${client.password}`).toString('base64')
     const res = await apiClient.post('/user/save', saveDTO, {
         headers: {
