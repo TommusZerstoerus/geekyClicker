@@ -3,6 +3,7 @@ package de.tommus.plugins
 import de.tommus.model.SaveDTO
 import de.tommus.model.UpgradeDTO
 import de.tommus.model.UserDTO
+import de.tommus.model.UserRegisterDTO
 import de.tommus.services.`interface`.UpgradeServiceInterface
 import de.tommus.services.`interface`.UserServiceInterface
 import io.ktor.http.*
@@ -73,10 +74,9 @@ fun Application.configureRouting() {
 
     routing {
         post("/user/register") {
-            val user = call.receive<UserDTO>()
+            val user = call.receive<UserRegisterDTO>()
             val response = userService.addNewUser(user)
             if (response != null) {
-                //upgradeService.createUpgrades(user.username)
                 call.respond(response)
             } else {
                 call.respond(HttpStatusCode.BadRequest)
@@ -89,7 +89,7 @@ fun Application.configureRouting() {
             post("/user/save") {
                 val dto = call.receive<SaveDTO>()
                 val username = dto.username
-                val userResponse = userService.save(username, dto.balance)
+                val userResponse = userService.save(username, dto.balance, dto.boughtStocks)
 
                 if (!userResponse) {
                     call.respond(HttpStatusCode.NotFound)

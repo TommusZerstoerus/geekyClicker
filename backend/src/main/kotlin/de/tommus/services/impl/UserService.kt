@@ -1,9 +1,6 @@
 package de.tommus.services.impl
 
-import de.tommus.model.SaveDTO
-import de.tommus.model.UserDTO
-import de.tommus.model.UserEntity
-import de.tommus.model.Users
+import de.tommus.model.*
 import de.tommus.services.`interface`.UserServiceInterface
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.select
@@ -22,7 +19,7 @@ class UserService : UserServiceInterface {
         UserEntity.findById(id)!!.toDto()
     }
 
-    override suspend fun addNewUser(newUser: UserDTO): UserDTO? {
+    override suspend fun addNewUser(newUser: UserRegisterDTO): UserDTO? {
         return try {
             transaction {
                 UserEntity.new {
@@ -41,9 +38,10 @@ class UserService : UserServiceInterface {
         } > 0
     }
 
-    override suspend fun save(username: String, newBalance: Int): Boolean = transaction {
+    override suspend fun save(username: String, newBalance: Int, newBoughtStocks: Boolean): Boolean = transaction {
         Users.update({ Users.username eq username }) {
             it[balance] = newBalance
+            it[boughtStocks] = newBoughtStocks
         } > 0
     }
 
@@ -51,7 +49,7 @@ class UserService : UserServiceInterface {
         val resultRow = Users.select { Users.username eq name }.singleOrNull()
         resultRow?.let {
             UserDTO(
-                it[Users.id].value, it[Users.username], it[Users.password], it[Users.balance]
+                it[Users.id].value, it[Users.username], it[Users.password], it[Users.balance], it[Users.boughtStocks]
             )
         }
     }

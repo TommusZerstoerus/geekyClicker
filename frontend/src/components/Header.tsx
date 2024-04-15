@@ -22,11 +22,13 @@ const Header = () => {
         setClient({
             username: '',
             password: '',
-            balance: 0
+            balance: 0,
+            boughtStocks: false,
         });
         setGame({
             balance: 0,
-            upgrades: {}
+            upgrades: {},
+            boughtStocks: false,
         });
         queryClient.invalidateQueries().then(() => navigate('/'));
     }
@@ -74,7 +76,8 @@ const Header = () => {
                     upgradeID: id,
                     level: game.upgrades[id]
                 }
-            })
+            }),
+            boughtStocks: game.boughtStocks
         };
         return ClientService.saveClient(client, dto)
     }
