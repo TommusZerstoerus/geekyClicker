@@ -49,7 +49,8 @@ const Login = () => {
 
     return (
         <Container maxWidth="xs">
-            <Paper elevation={3} style={{padding: 20, marginTop: 50}}>
+            <Typography sx={{textAlign: 'center', mt: 5}} variant="h2">GeekyClicker</Typography>
+            <Paper elevation={3} style={{padding: 20, marginTop: 50, borderRadius: 10}}>
                 <Typography variant="h4" gutterBottom>
                     Login
                 </Typography>

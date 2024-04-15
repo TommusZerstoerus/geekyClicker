@@ -15,7 +15,7 @@ const StocksTable = () => {
         <Box sx={{
             mt: 5,
             bgcolor: "lightgray",
-            borderRadius: 8,
+            borderRadius: {lg: 8, xs: 4},
         }}>
             <Table aria-label="Aktien">
                 <TableHead>
