@@ -38,10 +38,11 @@ class UserService : UserServiceInterface {
         } > 0
     }
 
-    override suspend fun save(username: String, newBalance: Int, newUnlockedStocks: Boolean): Boolean = transaction {
+    override suspend fun save(username: String, user: SaveDTO): Boolean = transaction {
         Users.update({ Users.username eq username }) {
-            it[balance] = newBalance
-            it[unlockedStocks] = newUnlockedStocks
+            it[balance] = user.balance
+            it[unlockedStocks] = user.unlockedStocks
+            it[unlockedRoulette] = user.unlockedRoulette
         } > 0
     }
 
@@ -49,7 +50,7 @@ class UserService : UserServiceInterface {
         val resultRow = Users.select { Users.username eq name }.singleOrNull()
         resultRow?.let {
             UserDTO(
-                it[Users.id].value, it[Users.username], it[Users.password], it[Users.balance], it[Users.unlockedStocks]
+                it[Users.id].value, it[Users.username], it[Users.password], it[Users.balance], it[Users.unlockedStocks], it[Users.unlockedRoulette]
             )
         }
     }

@@ -11,5 +11,6 @@ data class SaveDTO(
     val username: String,
     val upgrades: List<SavedUpgrade>,
     val balance: Int,
-    val unlockedStocks: Boolean
+    val unlockedStocks: Boolean,
+    val unlockedRoulette: Boolean
 )

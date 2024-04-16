@@ -66,6 +66,10 @@ const Home = () => {
         setGame({...game, unlockedStocks: true, balance: game.balance - 100000})
     }
 
+    const unlockRoulette = () => {
+        setGame({...game, unlockedRoulette: true, balance: game.balance - 10000})
+    }
+
     function calcBonus(id: number) {
         const mileStones = Math.floor(game.upgrades[id] / 100)
         return Math.floor(game.upgrades[id] * UpgradeBonusList[id] + UpgradeMileStoneList[id] * mileStones)
@@ -92,6 +96,7 @@ const Home = () => {
                 balance: client.balance,
                 upgrades: savedUpgrades,
                 unlockedStocks: client.unlockedStocks,
+                unlockedRoulette: client.unlockedRoulette
             })
         }
     }, [isSuccess, data]);
@@ -176,12 +181,20 @@ const Home = () => {
                                     alt="Logo"
                                 />
                             </Box>
-                            {game.unlockedStocks && <StocksTable/>}
-                            {!game.unlockedStocks &&
-                                <Button sx={{mt: 5}} disabled={game.balance <= 100000} startIcon={<ShoppingCart/>}
-                                        variant="contained" color="secondary" onClick={unlockStocks}>Schalte Aktien frei
-                                    ({formatNumber(100000)}€)</Button>}
-                            <RouletteTable/>
+                            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                {game.unlockedRoulette && <RouletteTable/>}
+                                {!game.unlockedRoulette &&
+                                    <Button sx={{mt: 5, width: '50%'}} disabled={game.balance <= 10000} startIcon={<ShoppingCart/>}
+                                            variant="contained" color="secondary" onClick={unlockRoulette}>Schalte
+                                        Roulette frei
+                                        ({formatNumber(10000)}€)</Button>}
+                                {game.unlockedStocks && <StocksTable/>}
+                                {!game.unlockedStocks &&
+                                    <Button sx={{mt: 5, width: '50%'}} disabled={game.balance <= 100000} startIcon={<ShoppingCart/>}
+                                            variant="contained" color="secondary" onClick={unlockStocks}>Schalte Aktien
+                                        frei
+                                        ({formatNumber(100000)}€)</Button>}
+                            </Box>
                         </Box>
                     </Container>
                 </Container>

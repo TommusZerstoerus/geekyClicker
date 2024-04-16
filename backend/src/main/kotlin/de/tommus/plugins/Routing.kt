@@ -88,7 +88,7 @@ fun Application.configureRouting() {
             post("/user/save") {
                 val dto = call.receive<SaveDTO>()
                 val username = dto.username
-                val userResponse = userService.save(username, dto.balance, dto.unlockedStocks)
+                val userResponse = userService.save(username, dto)
 
                 if (!userResponse) {
                     call.respond(HttpStatusCode.NotFound)

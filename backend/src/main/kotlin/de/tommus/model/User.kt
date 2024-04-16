@@ -10,6 +10,7 @@ object Users : IntIdTable() {
     val password = varchar("password", 128)
     val balance = integer("balance").default(10)
     val unlockedStocks = bool("unlockedStocks").default(false)
+    val unlockedRoulette = bool("unlockedRoulette").default(false)
 }
 
 class UserEntity(id: EntityID<Int>) : IntEntity(id) {
@@ -19,6 +20,7 @@ class UserEntity(id: EntityID<Int>) : IntEntity(id) {
     var password by Users.password
     var balance by Users.balance
     var unlockedStocks by Users.unlockedStocks
+    var unlockedRoulette by Users.unlockedRoulette
 
     fun toDto(): UserDTO {
         return UserDTO(
@@ -26,7 +28,8 @@ class UserEntity(id: EntityID<Int>) : IntEntity(id) {
             username = username,
             password = password,
             balance = balance,
-            unlockedStocks = unlockedStocks
+            unlockedStocks = unlockedStocks,
+            unlockedRoulette = unlockedRoulette
         )
     }
 }

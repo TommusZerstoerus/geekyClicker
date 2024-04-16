@@ -18,13 +18,15 @@ function App() {
         username: '',
         password: '',
         balance: 0,
-        unlockedStocks: false
+        unlockedStocks: false,
+        unlockedRoulette: false
     });
 
     const [game, setGame] = useState({
         balance: 0,
         upgrades: {},
-        unlockedStocks: false
+        unlockedStocks: false,
+        unlockedRoulette: false
     });
 
     return (

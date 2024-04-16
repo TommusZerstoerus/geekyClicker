@@ -13,9 +13,10 @@ const StocksTable = () => {
 
     return (
         <Box sx={{
-            mt: 5,
+            width: {lg: '100%'},
+            mt: 2,
             bgcolor: "lightgray",
-            borderRadius: {lg: 8, xs: 4},
+            borderRadius: {lg: 5, xs: 3},
         }}>
             <Table>
                 <TableHead>

@@ -3,4 +3,5 @@ export type Client = {
     password: string,
     balance: number,
     unlockedStocks: boolean,
+    unlockedRoulette: boolean
 }
