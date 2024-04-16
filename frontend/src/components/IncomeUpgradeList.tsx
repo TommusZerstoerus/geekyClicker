@@ -18,7 +18,7 @@ const IncomeUpgradeList = () => {
                         <Typography variant="h4">Einkommen</Typography>
                     </div>
                     <div style={{marginBottom: '20px'}}>
-                        <UpgradeBox id={5} name={"Einen weiteren Monitor aufstellen"} type={UpgradeType.INCOME}/>
+                        <UpgradeBox id={5} name={"Weiteren Monitor aufstellen"} type={UpgradeType.INCOME}/>
                     </div>
                     <div style={{marginBottom: '20px'}}>
                         <UpgradeBox id={6} name={"Musik hören"} type={UpgradeType.INCOME}/>

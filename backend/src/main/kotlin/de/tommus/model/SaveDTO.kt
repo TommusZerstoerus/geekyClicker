@@ -10,7 +10,7 @@ data class SavedUpgrade(val upgradeID: Int, val level: Int)
 data class SaveDTO(
     val username: String,
     val upgrades: List<SavedUpgrade>,
-    val balance: Int,
+    val balance: Long,
     val unlockedStocks: Boolean,
     val unlockedRoulette: Boolean
 )

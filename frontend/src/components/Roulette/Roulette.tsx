@@ -37,6 +37,7 @@ const RouletteTable = () => {
     const {game, setGame} = useGame()
 
     const startSpin = () => {
+        setGame({...game, balance: game.balance - currentBet})
         setBet(currentBet)
         setWinColor(Color.none)
         setSpinning(true)
@@ -67,20 +68,19 @@ const RouletteTable = () => {
     const loseGame = () => {
         setLost(true)
         const newBalance = game.balance - currentBet
-        if(currentBet > newBalance) {
-            setGame({...game, balance: newBalance})
-            setCurrentBet(newBalance)
-        } else {
-            setGame({...game, balance: newBalance})
+        if(newBalance < currentBet) {
+            setCurrentBet(game.balance)
         }
+        setCurrentBet(newBalance)
     }
 
     const winGame = (color: Color) => {
         setWon(color)
-        if (color == Color.red) {
-            setGame({...game, balance: game.balance + currentBet * 2})
+        const newBalance = game.balance - currentBet
+        if (color == Color.red || color == Color.black) {
+            setGame({...game, balance: newBalance + currentBet * 2})
         } else {
-            setGame({...game, balance: game.balance + currentBet * 14})
+            setGame({...game, balance: newBalance + currentBet * 14})
         }
     }
 
@@ -94,13 +94,14 @@ const RouletteTable = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            mt: 2,
+            mt: 5,
             p: 2
         }}>
             <Typography>Roulette</Typography>
             <TextField
                 label="Einsatz"
                 type="number"
+                color="secondary"
                 disabled={spinning}
                 helperText={"Aktuelles Guthaben: " + formatNumber(game.balance) + "€"}
                 value={currentBet}
@@ -123,7 +124,6 @@ const RouletteTable = () => {
                             "&:hover": {
                                 backgroundColor: "red"
                             },
-                            cursor: 'pointer',
                             border: selectedColor === Color.red ? '5px solid yellow' : 'none',
                         }}
                         onClick={() => setSelectedColor(Color.red)}
@@ -141,7 +141,6 @@ const RouletteTable = () => {
                             "&:hover": {
                                 backgroundColor: "black"
                             },
-                            cursor: 'pointer',
                             border: selectedColor === Color.black ? '5px solid yellow' : 'none',
                         }}
                         onClick={() => setSelectedColor(Color.black)}
@@ -159,7 +158,6 @@ const RouletteTable = () => {
                             "&:hover": {
                                 backgroundColor: "green"
                             },
-                            cursor: 'pointer',
                             border: selectedColor === Color.green ? '5px solid yellow' : 'none',
                         }}
                         onClick={() => setSelectedColor(Color.green)}
@@ -170,9 +168,11 @@ const RouletteTable = () => {
             {won !== Color.none && <Typography color="green">{formatNumber(bet * 2)}€ Gewonnen!</Typography>}
             {lost && <Typography color="red">{formatNumber(bet)}€ Verloren!</Typography>}
             {spinning && <Typography>Spinning...</Typography>}
-            <Button variant="contained" sx={{mt: 2}} onClick={startSpin} disabled={spinning}>
-                Spin
-            </Button>
+            <Box>
+                <Button variant="contained" color="secondary" sx={{mt: 2, width: '50%'}} onClick={startSpin} disabled={spinning}>
+                    Spin
+                </Button>
+            </Box>
         </Box>
     );
 }

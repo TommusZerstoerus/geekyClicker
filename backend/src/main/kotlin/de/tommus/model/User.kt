@@ -8,7 +8,7 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 object Users : IntIdTable() {
     val username = varchar("username", 128).uniqueIndex()
     val password = varchar("password", 128)
-    val balance = integer("balance").default(10)
+    val balance = long("balance").default(10L)
     val unlockedStocks = bool("unlockedStocks").default(false)
     val unlockedRoulette = bool("unlockedRoulette").default(false)
 }
