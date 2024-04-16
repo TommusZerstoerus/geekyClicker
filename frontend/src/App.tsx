@@ -17,12 +17,14 @@ function App() {
     const [client, setClient] = useState({
         username: '',
         password: '',
-        balance: 0
+        balance: 0,
+        unlockedStocks: false
     });
 
     const [game, setGame] = useState({
         balance: 0,
-        upgrades: {}
+        upgrades: {},
+        unlockedStocks: false
     });
 
     return (

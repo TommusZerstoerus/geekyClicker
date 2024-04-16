@@ -3,7 +3,8 @@ import {Game} from "../model/Game.ts";
 
 const initialGameState: Game = {
     balance: 0,
-    upgrades: {}
+    upgrades: {},
+    unlockedStocks: false
 };
 
 export const GameContext = createContext<{

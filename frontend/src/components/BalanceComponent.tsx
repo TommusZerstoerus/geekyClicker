@@ -1,4 +1,5 @@
 import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box";
 
 export function formatNumber(balance: number) {
     const numString = balance.toString();
@@ -10,12 +11,14 @@ type BalanceComponentProps = {
 }
 
 function BalanceComponent({ balance }: BalanceComponentProps) {
-    const formattedBalance = formatNumber(balance);
+    const formattedBalance = formatNumber(balance)
 
     return (
-        <Typography variant="h4">
-            Balance {formattedBalance}€
-        </Typography>
+        <Box sx={{marginBottom: '20px'}}>
+            <Typography variant="h4">
+                Balance {formattedBalance}€
+            </Typography>
+        </Box>
     );
 }
 

@@ -17,7 +17,7 @@ const StocksTable = () => {
             bgcolor: "lightgray",
             borderRadius: {lg: 8, xs: 4},
         }}>
-            <Table aria-label="Aktien">
+            <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Aktie</TableCell>

@@ -12,6 +12,8 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import {queryClient} from "../api/client.ts";
 import {useGame} from "../context/GameContext.ts";
+import {IconButton} from "@mui/material";
+import {Info} from "@mui/icons-material";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -65,6 +67,15 @@ const Header = () => {
         })
     }
 
+    const showInfo = () => {
+        withReactContent(Swal).fire({
+            title: <i>GeekyClicker</i>,
+            text: 'Kaufe Klick Upgrades um dein Einkommen pro Klick zu erhöhen. Die passiven Einkommen Upgrades erhöhen dein Einkommen pro Sekunde, falls du mal nicht klicken möchtest. Kaufe Aktien um mit deinem Geld ein bisschen zu spielen.',
+            icon: 'info',
+            showConfirmButton: true,
+        })
+    }
+
 
     function handleSave() {
         const dto: SaveDTO = {
@@ -89,7 +100,8 @@ const Header = () => {
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Willkommen {client.username}
                     </Typography>
-                    <Button style={{marginRight: '20px'}} color="inherit" onClick={() => mutate()}>Speichern</Button>
+                    <IconButton sx={{mr: '20px'}} onClick={showInfo}><Info/></IconButton>
+                    <Button sx={{mr: '20px'}} color="inherit" onClick={() => mutate()}>Speichern</Button>
                     <Button color="inherit" onClick={handleLogout}>Logout</Button>
                 </Toolbar>
             </AppBar>

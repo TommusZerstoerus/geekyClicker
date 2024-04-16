@@ -17,6 +17,9 @@ import {animated, useSpring} from '@react-spring/web'
 import StocksTable from "../components/Stocks/StocksTable.tsx";
 import Button from "@mui/material/Button";
 import {ShoppingCart} from "@mui/icons-material";
+import PassiveIncome from "../components/Home/PassiveIncome.tsx";
+import ActiveIncome from "../components/Home/ActiveIncome.tsx";
+import RouletteTable from "../components/Roulette/Roulette.tsx";
 
 const Home = () => {
     const {client} = useClient();
@@ -125,7 +128,6 @@ const Home = () => {
     if (isPending) {
         return <Box sx={{
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
         }}>
@@ -136,7 +138,6 @@ const Home = () => {
     if (isError || !isSuccess) {
         return <Box sx={{
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
         }}>
@@ -159,22 +160,12 @@ const Home = () => {
                 }}>
                     <Container sx={{maxWidth: "100%", textAlign: 'center', width: "100%"}}>
                         <Box p={2}>
-                            <Box sx={{marginBottom: '20px'}}>
-                                <BalanceComponent balance={game.balance}/>
-                            </Box>
-                            <Box sx={{marginBottom: '10px'}}>
-                                <Typography variant="h6" gutterBottom>
-                                    Klick Bonus {formatNumber(clickBonus)}€
-                                </Typography>
-                            </Box>
-                            <Box sx={{marginBottom: '20px'}}>
-                                <Typography variant="h6" gutterBottom>
-                                    Passives Einkommen {formatNumber(incomeBonus)}€
-                                </Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+                            <BalanceComponent balance={game.balance}/>
+                            <ActiveIncome activeIncome={clickBonus}/>
+                            <PassiveIncome incomeBonus={incomeBonus}/>
+                            <Box sx={{display: 'flex', justifyContent: 'center'}}>
                                 <animated.img
-                                    style={{ cursor: 'pointer', transform, userSelect: 'none', width: '50%' }}
+                                    style={{cursor: 'pointer', transform, userSelect: 'none', width: '40%'}}
                                     onClick={() => {
                                         handleClick()
                                         setWobble(true)
@@ -190,29 +181,12 @@ const Home = () => {
                                 <Button sx={{mt: 5}} disabled={game.balance <= 100000} startIcon={<ShoppingCart/>}
                                         variant="contained" color="secondary" onClick={unlockStocks}>Schalte Aktien frei
                                     ({formatNumber(100000)}€)</Button>}
+                            <RouletteTable/>
                         </Box>
                     </Container>
                 </Container>
-                <Container maxWidth="xs" sx={{
-                    textAlign: "center",
-                    flex: "1",
-                    display: "flex",
-                    justifyContent: "center",
-                    marginBottom: '20px',
-                    order: {lg: 1, xs: 2}
-                }}>
-                    <ClickUpgradeList/>
-                </Container>
-                <Container maxWidth="xs" sx={{
-                    textAlign: "center",
-                    flex: "1",
-                    display: "flex",
-                    justifyContent: "center",
-                    marginBottom: '20px',
-                    order: 3
-                }}>
-                    <IncomeUpgradeList/>
-                </Container>
+                <ClickUpgradeList/>
+                <IncomeUpgradeList/>
             </Box>
         </>
     );
