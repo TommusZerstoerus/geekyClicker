@@ -1,30 +1,83 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(0, 0, 0, 0.87);
-  background: linear-gradient(to right, #ada996, #f2f2f2, #dbdbdb, #eaeaea);
+    color-scheme: light dark;
+    color: rgba(0, 0, 0, 0.87);
+    background: linear-gradient(to right, #ada996, #f2f2f2, #dbdbdb, #eaeaea);
 }
-body{
-  margin: 0;
+
+body {
+    margin: 0;
 }
 
 .animated-svg {
-  animation-name: bounce;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
+    animation-name: bounce;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
 }
 
 @keyframes wobble {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
+
+.animated-red {
+    animation-name: colorChangeRed;
+    animation: colorChangeRed 5s infinite;
+}
+
+@keyframes colorChangeRed {
+    0%, 15%, 30%, 45%, 60%, 75% {
+        background-color: green;
+    }
+    5%, 20%, 35%, 50%, 65%, 80% {
+        background-color: black;
+    }
+    10%, 25%, 40%, 55%, 70%, 85%, 100% {
+        background-color: red;
+    }
+}
+
+.animated-black {
+    animation-name: colorChangeBlack;
+    animation: colorChangeBlack 5s infinite;
+}
+
+@keyframes colorChangeBlack {
+    0%, 15%, 30%, 45%, 60%, 75% {
+        background-color: red;
+    }
+    5%, 20%, 35%, 50%, 65%, 80% {
+        background-color: green;
+    }
+    10%, 25%, 40%, 55%, 70%, 85%, 100% {
+        background-color: black;
+    }
+}
+
+.animated-green {
+    animation-name: colorChangeGreen;
+    animation: colorChangeGreen 5s infinite;
+}
+
+@keyframes colorChangeGreen {
+    0%, 15%, 30%, 45%, 60%, 75% {
+        background-color: black;
+    }
+    5%, 20%, 35%, 50%, 65%, 80% {
+        background-color: red;
+    }
+    10%, 25%, 40%, 55%, 70%, 85%, 100% {
+        background-color: green;
+    }
+}
+

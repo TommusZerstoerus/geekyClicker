@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Grid, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useGame} from "../../context/GameContext.ts";
@@ -38,25 +38,29 @@ const RouletteTable = () => {
 
     const startSpin = () => {
         setGame({...game, balance: game.balance - currentBet})
+        console.log(getColorString(selectedColor))
         setBet(currentBet)
         setWinColor(Color.none)
         setSpinning(true)
         setWon(Color.none)
         setLost(false)
+        const randomOutcome = Math.random();
+        if (randomOutcome < 0.485) {
+            setWinColor(Color.red)
+        } else if (randomOutcome < 0.97) {
+            setWinColor(Color.black)
+        } else {
+            setWinColor(Color.green)
+        }
         setTimeout(() => {
-            const randomOutcome = Math.random();
-            if (randomOutcome < 0.485) {
-                setWinColor(Color.red)
-            } else if (randomOutcome < 0.97) {
-                setWinColor(Color.black)
-            } else {
-                setWinColor(Color.green)
-            }
             if (randomOutcome < 0.485 && selectedColor == Color.red) {
+                console.log("RED WIN")
                 winGame(Color.red);
-            } else if (randomOutcome < 0.97 && selectedColor == Color.black) {
+            } else if (randomOutcome >= 0.485 && randomOutcome < 0.97 && selectedColor == Color.black) {
+                console.log("BLACK WIN")
                 winGame(Color.black);
             } else if (randomOutcome >= 0.97 && selectedColor == Color.green) {
+                console.log("GREEN WIN")
                 winGame(Color.green);
             } else {
                 loseGame()
@@ -67,22 +71,25 @@ const RouletteTable = () => {
 
     const loseGame = () => {
         setLost(true)
-        const newBalance = game.balance - currentBet
-        if(newBalance < currentBet) {
-            setCurrentBet(game.balance)
-        }
-        setCurrentBet(newBalance)
     }
 
     const winGame = (color: Color) => {
         setWon(color)
-        const newBalance = game.balance - currentBet
+        const newBalance = game.balance - bet
         if (color == Color.red || color == Color.black) {
-            setGame({...game, balance: newBalance + currentBet * 2})
+            const win = bet * 2
+            setGame({...game, balance: newBalance + win})
         } else {
-            setGame({...game, balance: newBalance + currentBet * 14})
+            const win = bet * 14
+            setGame({...game, balance: newBalance + win})
         }
     }
+
+    useEffect(() => {
+        if (game.balance < currentBet) {
+            setCurrentBet(game.balance)
+        }
+    }, [game.balance]);
 
     return (
         <Box sx={{
@@ -112,7 +119,7 @@ const RouletteTable = () => {
                 }}
             />
             <Grid container sx={{display: 'flex', justifyContent: 'center', mt: 3, mb: 2}}>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <Button
                         disabled={spinning}
                         variant="contained"
@@ -129,7 +136,7 @@ const RouletteTable = () => {
                         onClick={() => setSelectedColor(Color.red)}
                     />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <Button
                         disabled={spinning}
                         variant="contained"
@@ -146,7 +153,7 @@ const RouletteTable = () => {
                         onClick={() => setSelectedColor(Color.black)}
                     />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <Button
                         disabled={spinning}
                         variant="contained"
@@ -164,12 +171,29 @@ const RouletteTable = () => {
                     />
                 </Grid>
             </Grid>
-            <Typography>{getColorString(winColor)}</Typography>
+            {!spinning && <Typography>{getColorString(winColor)}</Typography>}
             {won !== Color.none && <Typography color="green">{formatNumber(bet * 2)}€ Gewonnen!</Typography>}
             {lost && <Typography color="red">{formatNumber(bet)}€ Verloren!</Typography>}
             {spinning && <Typography>Spinning...</Typography>}
+            {spinning &&
+                <Box sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
+                    <Box
+                        className={winColor === Color.red ? "animated-red" : winColor === Color.black ? "animated-black" : "animated-green"}
+                        sx={{
+                            width: 100,
+                            height: 100,
+                            "&:hover": {
+                                backgroundColor: "green"
+                            },
+                        }}
+                    >
+
+                    </Box>
+                </Box>
+            }
             <Box>
-                <Button variant="contained" color="secondary" sx={{mt: 2, width: '50%'}} onClick={startSpin} disabled={spinning}>
+                <Button variant="contained" color="secondary" sx={{mt: 2, width: '50%'}} onClick={startSpin}
+                        disabled={spinning}>
                     Spin
                 </Button>
             </Box>
