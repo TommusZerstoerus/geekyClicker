@@ -38,7 +38,6 @@ const RouletteTable = () => {
 
     const startSpin = () => {
         setGame({...game, balance: game.balance - currentBet})
-        console.log(getColorString(selectedColor))
         setBet(currentBet)
         setWinColor(Color.none)
         setSpinning(true)
@@ -54,13 +53,10 @@ const RouletteTable = () => {
         }
         setTimeout(() => {
             if (randomOutcome < 0.485 && selectedColor == Color.red) {
-                console.log("RED WIN")
                 winGame(Color.red);
             } else if (randomOutcome >= 0.485 && randomOutcome < 0.97 && selectedColor == Color.black) {
-                console.log("BLACK WIN")
                 winGame(Color.black);
             } else if (randomOutcome >= 0.97 && selectedColor == Color.green) {
-                console.log("GREEN WIN")
                 winGame(Color.green);
             } else {
                 loseGame()
@@ -78,6 +74,7 @@ const RouletteTable = () => {
         const newBalance = game.balance - bet
         if (color == Color.red || color == Color.black) {
             const win = bet * 2
+            console.log("bet", bet, "currentBet", currentBet, "win", win, "Balance", game.balance)
             setGame({...game, balance: newBalance + win})
         } else {
             const win = bet * 14
@@ -119,7 +116,7 @@ const RouletteTable = () => {
                 }}
             />
             <Grid container sx={{display: 'flex', justifyContent: 'center', mt: 3, mb: 2}}>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <Button
                         disabled={spinning}
                         variant="contained"
@@ -136,7 +133,7 @@ const RouletteTable = () => {
                         onClick={() => setSelectedColor(Color.red)}
                     />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <Button
                         disabled={spinning}
                         variant="contained"
@@ -153,7 +150,7 @@ const RouletteTable = () => {
                         onClick={() => setSelectedColor(Color.black)}
                     />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <Button
                         disabled={spinning}
                         variant="contained"
